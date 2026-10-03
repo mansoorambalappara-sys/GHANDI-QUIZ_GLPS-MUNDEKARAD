@@ -339,7 +339,7 @@
     </script>
 
     <script>
-        // Questions array with numbers removed from question text
+        // Questions array with numbers completely removed from question text
         const baseQuizQuestions = [
             {
                 q: "മഹാത്മാ ഗാന്ധിയുടെ ജനനം എപ്പോഴാണ്?",
@@ -545,7 +545,7 @@
             document.getElementById('question-text').textContent = qObj.q;
 
             const optionsContainer = document.getElementById('options-container');
-            optionsContainer.innerHTML = '';
+            optionsContainer.innerHTML = ''; // Completely clear previous options so no carry-over marks appear
 
             qObj.options.forEach((opt, idx) => {
                 const btn = document.createElement('button');
@@ -584,7 +584,7 @@
                 btn.classList.add('cursor-not-allowed');
             }
 
-            // Highlight selected option cleanly without carrying over indicators
+            // Highlight ONLY the currently selected option cleanly without exposing correct/incorrect hints
             selectedBtn.classList.remove('border-gray-200', 'hover:bg-emerald-50/80', 'bg-white');
             selectedBtn.classList.add('bg-emerald-100', 'border-emerald-600', 'text-emerald-900', 'shadow-md');
 
