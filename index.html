@@ -141,7 +141,7 @@
             <div class="flex justify-between items-center mb-4 border-b pb-4">
                 <div>
                     <h3 class="text-xl font-bold text-gray-900">അഡ്മിൻ പാനൽ (ടീച്ചേഴ്സ് ലോഞ്ച്)</h3>
-                    <p class="text-xs text-gray-500">പങ്കെടുത്തവരുടെ സ്കോറുകൾ (ഉയർന്ന സ്കോർ ആദ്യം), ശരി/തെറ്റ് ഉത്തരങ്ങൾ, പിഡിഎഫ് & വിജയികളെ പ്രഖ്യാപിക്കൽ</p>
+                    <p class="text-xs text-gray-500">പങ്കെടുത്തവരുടെ സ്കോറുകൾ, വ്യക്തിഗത ഡിലീറ്റ്, പിഡിഎഫ് & വിജയികളെ പ്രഖ്യാപിക്കൽ</p>
                 </div>
                 <button onclick="closeAdminModal()" class="text-gray-400 hover:text-gray-800 text-2xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition">&times;</button>
             </div>
@@ -190,7 +190,7 @@
                     <span>📄</span> പിഡിഎഫ് റിപ്പോർട്ട് ഡൗൺലോഡ് (A4 Format)
                 </button>
                 <button onclick="exportData()" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-xs px-4 py-2.5 rounded-xl font-bold btn-3d shadow">ജോസൺ (JSON) ഡൗൺലോഡ്</button>
-                <button onclick="clearCloudData()" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-xs px-4 py-2.5 rounded-xl font-bold btn-3d shadow">എല്ലാ ഡാറ്റയും ക്ലിയർ ചെയ്യുക</button>
+                <button onclick="clearCloudData()" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-xs px-4 py-2.5 rounded-xl font-bold btn-3d shadow">ലോക്കൽ ഡാറ്റ ക്ലിയർ ചെയ്യുക</button>
             </div>
 
             <div id="admin-data-list" class="space-y-3">
@@ -234,33 +234,13 @@
         </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, doc, setDoc, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <script>
+        // ==========================================
+        // GOOGLE APPS SCRIPT WEB APP URL CONFIGURATION
+        // ==========================================
+        // താഴെയുള്ള കോട്ടേഷനുള്ളിൽ ഗൂഗിൾ ആപ്സ് സ്ക്രിപ്റ്റിന്റെ വെബ് ആപ്പ് URL ഒട്ടിച്ചു കൊടുക്കുക:
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby1rnGJm9gZxayiCsNISOTDKGIHNNQjGm2QQahZuMPkXr_xyv-GMQzgacdB-km3VbZJOg/exec"; 
 
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'mundakkarad-gandhi-quiz-2026';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-            apiKey: "AIzaSyDummyKeyForArtifactsRuntimeEnvironment",
-            authDomain: "artifact-runtime.firebaseapp.com",
-            projectId: "artifact-runtime",
-            storageBucket: "artifact-runtime.appspot.com",
-            messagingSenderId: "1234567890",
-            appId: "1:1234567890:web:abcdef"
-        };
-
-        let db = null;
-        let auth = null;
-
-        try {
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
-        } catch (e) {
-            console.warn("Firebase init skipped/failed, falling back to local storage.", e);
-        }
-
-        // Hybrid storage helpers ensuring 100% reliable participant data collection across GitHub / Web hosting
         window.getAllParticipants = async function() {
             let participants = [];
             try {
@@ -270,28 +250,18 @@
                 }
             } catch(e) { console.error(e); }
 
-            if (db && auth) {
+            if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL.startsWith('http')) {
                 try {
-                    if (!auth.currentUser) {
-                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                            await signInWithCustomToken(auth, __initial_auth_token);
-                        } else {
-                            await signInAnonymously(auth);
-                        }
-                    }
-                    const snapshot = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'participants'));
-                    let cloudList = [];
-                    snapshot.forEach(docSnap => {
-                        cloudList.push(docSnap.data());
-                    });
-                    if (cloudList.length > 0) {
+                    const response = await fetch(GOOGLE_SCRIPT_URL);
+                    const cloudList = await response.json();
+                    if (Array.isArray(cloudList) && cloudList.length > 0) {
                         const map = new Map();
                         [...participants, ...cloudList].forEach(p => map.set(p.mobile, p));
                         participants = Array.from(map.values());
                         localStorage.setItem('mundakkarad_participants', JSON.stringify(participants));
                     }
                 } catch(e) {
-                    console.warn("Cloud fetch fallback to local:", e);
+                    console.warn("Google Sheet sync fetch warning:", e);
                 }
             }
             return participants;
@@ -309,21 +279,15 @@
                 localStorage.setItem('mundakkarad_participants', JSON.stringify(participants));
             } catch(e) { console.error(e); }
 
-            if (db && auth) {
+            if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL.startsWith('http')) {
                 try {
-                    if (!auth.currentUser) {
-                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                            await signInWithCustomToken(auth, __initial_auth_token);
-                        } else {
-                            await signInAnonymously(auth);
-                        }
-                    }
-                    const docId = `mobile_${userData.mobile}`;
-                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'participants', docId);
-                    await setDoc(docRef, userData);
-                } catch(e) {
-                    console.warn("Cloud save error:", e);
-                }
+                    await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(userData)
+                    });
+                } catch(e) { console.warn("Google Sheet sync error:", e); }
             }
         };
 
@@ -337,55 +301,19 @@
                 participants = participants.filter(p => p.mobile !== mobile);
                 localStorage.setItem('mundakkarad_participants', JSON.stringify(participants));
             } catch(e) { console.error(e); }
-
-            if (db && auth) {
-                try {
-                    const docId = `mobile_${mobile}`;
-                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'participants', docId);
-                    await deleteDoc(docRef);
-                } catch(e) {
-                    console.warn("Cloud delete error:", e);
-                }
-            }
         };
 
         window.clearAllParticipantsStorage = async function() {
             localStorage.removeItem('mundakkarad_participants');
-            if (db && auth) {
-                try {
-                    const snapshot = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'participants'));
-                    const deletePromises = snapshot.docs.map(d => deleteDoc(d.ref));
-                    await Promise.all(deletePromises);
-                } catch(e) { console.error(e); }
-            }
         };
 
         window.savePublishedResultStorage = async function(structuredData) {
             localStorage.setItem('mundakkarad_published_results', JSON.stringify(structuredData));
-            if (db && auth) {
-                try {
-                    if (!auth.currentUser) {
-                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                            await signInWithCustomToken(auth, __initial_auth_token);
-                        } else {
-                            await signInAnonymously(auth);
-                        }
-                    }
-                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'published_results');
-                    await setDoc(docRef, structuredData);
-                } catch(e) { console.error(e); }
-            }
             document.getElementById('public-results-btn-container').classList.remove('hidden');
         };
 
         window.removePublishedResultStorage = async function() {
             localStorage.removeItem('mundakkarad_published_results');
-            if (db && auth) {
-                try {
-                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'published_results');
-                    await deleteDoc(docRef);
-                } catch(e) { console.error(e); }
-            }
             document.getElementById('public-results-btn-container').classList.add('hidden');
         };
 
@@ -394,24 +322,8 @@
                 let pub = localStorage.getItem('mundakkarad_published_results');
                 if (pub) {
                     document.getElementById('public-results-btn-container').classList.remove('hidden');
-                    return;
-                }
-                
-                if (db && auth) {
-                    if (!auth.currentUser) {
-                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                            await signInWithCustomToken(auth, __initial_auth_token);
-                        } else {
-                            await signInAnonymously(auth);
-                        }
-                    }
-                    const snapshot = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'settings'));
-                    snapshot.forEach(docSnap => {
-                        if (docSnap.id === 'published_results') {
-                            localStorage.setItem('mundakkarad_published_results', JSON.stringify(docSnap.data()));
-                            document.getElementById('public-results-btn-container').classList.remove('hidden');
-                        }
-                    });
+                } else {
+                    document.getElementById('public-results-btn-container').classList.add('hidden');
                 }
             } catch(e) {
                 console.warn("Could not check published results:", e);
@@ -980,7 +892,7 @@
         }
 
         window.clearCloudData = async function() {
-            if (confirm("എല്ലാ ഡാറ്റയും ക്ലിയർ ചെയ്യണമെന്നുറപ്പാണോ?")) {
+            if (confirm("എല്ലാ ലോക്കൽ ഡാറ്റയും ക്ലിയർ ചെയ്യണമെന്നുറപ്പാണോ?")) {
                 await window.clearAllParticipantsStorage();
                 await renderAdminData();
             }
