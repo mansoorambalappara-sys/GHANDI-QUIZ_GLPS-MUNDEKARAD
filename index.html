@@ -141,14 +141,14 @@
             <div class="flex justify-between items-center mb-4 border-b pb-4">
                 <div>
                     <h3 class="text-xl font-bold text-gray-900">അഡ്മിൻ പാനൽ (ടീച്ചേഴ്സ് ലോഞ്ച്)</h3>
-                    <p class="text-xs text-gray-500">പങ്കെടുത്തവരുടെ സ്കോറുകൾ, ശരി/തെറ്റ് ഉത്തരങ്ങൾ, പ്രിന്റബിൾ PDF & വിജയികളെ പ്രഖ്യാപിക്കൽ</p>
+                    <p class="text-xs text-gray-500">പങ്കെടുത്തവരുടെ സ്കോറുകൾ (ഉയർന്ന സ്കോർ ആദ്യം), ശരി/തെറ്റ് ഉത്തരങ്ങൾ, പിഡിഎഫ് & വിജയികളെ പ്രഖ്യാപിക്കൽ</p>
                 </div>
                 <button onclick="closeAdminModal()" class="text-gray-400 hover:text-gray-800 text-2xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition">&times;</button>
             </div>
 
             <!-- Structured Winner Publishing Section -->
             <div class="mb-6 bg-amber-50 p-4 rounded-2xl border border-amber-200">
-                <h4 class="font-bold text-amber-900 text-sm mb-3">📢 വിജയികളുടെ പട്ടിക പബ്ലിഷ് ചെയ്യുക / എഡിറ്റ് ചെയ്യുക</h4>
+                <h4 class="font-bold text-amber-900 text-sm mb-3">📢 വിജയികളുടെ പട്ടിക പബ്ലിഷ് ചെയ്യുക / എഡിറ്റ് ചെയ്യുക (ഫസ്റ്റ്, സെക്കൻഡ്, തേർഡ്)</h4>
                 
                 <div class="space-y-4 mb-4">
                     <!-- First Place -->
@@ -285,7 +285,6 @@
                         cloudList.push(docSnap.data());
                     });
                     if (cloudList.length > 0) {
-                        // Merge cloud and local data uniquely by mobile number
                         const map = new Map();
                         [...participants, ...cloudList].forEach(p => map.set(p.mobile, p));
                         participants = Array.from(map.values());
@@ -324,6 +323,28 @@
                     await setDoc(docRef, userData);
                 } catch(e) {
                     console.warn("Cloud save error:", e);
+                }
+            }
+        };
+
+        window.deleteParticipantByMobile = async function(mobile) {
+            try {
+                let participants = [];
+                const localData = localStorage.getItem('mundakkarad_participants');
+                if (localData) {
+                    participants = JSON.parse(localData);
+                }
+                participants = participants.filter(p => p.mobile !== mobile);
+                localStorage.setItem('mundakkarad_participants', JSON.stringify(participants));
+            } catch(e) { console.error(e); }
+
+            if (db && auth) {
+                try {
+                    const docId = `mobile_${mobile}`;
+                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'participants', docId);
+                    await deleteDoc(docRef);
+                } catch(e) {
+                    console.warn("Cloud delete error:", e);
                 }
             }
         };
@@ -713,6 +734,13 @@
             }
         }
 
+        window.deleteParticipant = async function(mobile) {
+            if (confirm("ഈ participant-ന്റെ എൻട്രി ഡിലീറ്റ് ചെയ്യണമെന്ന് ഉറപ്പാണോ?")) {
+                await window.deleteParticipantByMobile(mobile);
+                await renderAdminData();
+            }
+        }
+
         function closeAdminModal() {
             document.getElementById('admin-modal').classList.add('hidden');
         }
@@ -730,7 +758,7 @@
 
             participants.sort((a, b) => b.score - a.score);
 
-            let html = `<div class="text-xs font-bold text-gray-500 mb-2">ആകെ പങ്കെടുത്തവർ: ${participants.length}</div>`;
+            let html = `<div class="text-xs font-bold text-gray-500 mb-2">ആകെ പങ്കെടുത്തവർ: ${participants.length} (ഉയർന്ന സ്കോർ മുതൽ താഴേക്ക്)</div>`;
             participants.forEach((p, index) => {
                 html += `
                     <div class="p-4 bg-gray-50 rounded-2xl border border-gray-200 text-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-2 shadow-sm">
@@ -742,13 +770,14 @@
                             </div>
                             <div class="text-xs text-gray-600 mt-1">കുട്ടി: <span class="font-semibold text-emerald-700">${p.childName}</span> | ഫോൺ: <span class="font-semibold">${p.mobile}</span></div>
                             <div class="text-xs text-gray-700 mt-1 flex gap-3 font-semibold">
-                                <span class="text-emerald-700">ശരി ഉത്തരങ്ങൾ: ${p.correctCount || 0}</span>
-                                <span class="text-rose-600">തെറ്റ്/ഒഴിവായത്: ${p.incorrectCount || 0}</span>
+                                <span class="text-emerald-700">ശരി: ${p.correctCount || 0}</span>
+                                <span class="text-rose-600">തെറ്റ്: ${p.incorrectCount || 0}</span>
                             </div>
                             <div class="text-[10px] text-gray-400 mt-0.5">സമയം: ${p.timestamp}</div>
                         </div>
                         <div class="flex items-center gap-2 self-end md:self-center">
                             <span class="bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-xl text-xs shadow-sm">സ്കോർ: ${p.score}</span>
+                            <button onclick="deleteParticipant('${p.mobile}')" class="bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold px-3 py-1.5 rounded-xl text-xs transition">🗑️ ഡിലീറ്റ്</button>
                         </div>
                     </div>
                 `;
@@ -780,7 +809,7 @@
             }
         }
 
-        function addWinnerRow(place, parentVal = '', childVal = '', classVal = '') {
+        window.addWinnerRow = function(place, parentVal = '', childVal = '', classVal = '') {
             const container = document.getElementById(`winners-${place}-container`);
             const div = document.createElement('div');
             div.className = "flex flex-col md:flex-row gap-2 items-center bg-gray-50 p-2 rounded-xl border border-gray-200";
@@ -815,7 +844,7 @@
             return list;
         }
 
-        async function publishStructuredResult() {
+        window.publishStructuredResult = async function() {
             const winnersData = {
                 first: collectWinnersData('first'),
                 second: collectWinnersData('second'),
@@ -844,13 +873,13 @@
             }
         }
 
-        async function hideResult() {
+        window.hideResult = async function() {
             await window.removePublishedResultStorage();
             initWinnerRows();
             alert("ഫലം പബ്ലിഷിംഗ് പൂർണ്ണമായി നീക്കം ചെയ്തു.");
         }
 
-        async function openPublicResultsModal() {
+        window.openPublicResultsModal = async function() {
             const contentContainer = document.getElementById('public-results-content');
             let saved = null;
             try {
@@ -890,11 +919,11 @@
             document.getElementById('public-results-modal').classList.remove('hidden');
         }
 
-        function closePublicResultsModal() {
+        window.closePublicResultsModal = function() {
             document.getElementById('public-results-modal').classList.add('hidden');
         }
 
-        async function downloadPDF() {
+        window.downloadPDF = async function() {
             let participants = await window.getAllParticipants();
             if (participants.length === 0) {
                 alert("ഡൗൺലോഡ് ചെയ്യാൻ ഡാറ്റകളൊന്നുമില്ല!");
@@ -940,7 +969,7 @@
             });
         }
 
-        async function exportData() {
+        window.exportData = async function() {
             let participants = await window.getAllParticipants();
             let blob = new Blob([JSON.stringify(participants, null, 2)], { type: 'application/json' });
             let url = URL.createObjectURL(blob);
@@ -950,7 +979,7 @@
             a.click();
         }
 
-        async function clearCloudData() {
+        window.clearCloudData = async function() {
             if (confirm("എല്ലാ ഡാറ്റയും ക്ലിയർ ചെയ്യണമെന്നുറപ്പാണോ?")) {
                 await window.clearAllParticipantsStorage();
                 await renderAdminData();
