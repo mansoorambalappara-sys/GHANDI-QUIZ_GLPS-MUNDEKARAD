@@ -448,7 +448,7 @@
         let correctCount = 0;
         let incorrectCount = 0;
         let timer = null;
-        let timeLeft = 40; // 40 seconds per question
+        let timeLeft = 40; // 40 seconds per question strictly
         let userData = {};
         let quizActive = false;
 
@@ -459,25 +459,37 @@
         const regError = document.getElementById('reg-error');
 
         function prepareShuffledQuiz() {
-            quizQuestions = baseQuizQuestions.map(q => {
-                let optionsWithIndex = q.options.map((opt, idx) => ({ opt, originalIdx: idx }));
-                for (let i = optionsWithIndex.length - 1; i > 0; i--) {
+            // Shuffle questions order, but preserve their respective display labels cleanly
+            let list = baseQuizQuestions.map(item => {
+                let opts = [...item.options];
+                let correctOptText = opts[item.answer];
+                // Shuffle options
+                for (let i = opts.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
-                    [optionsWithIndex[i], optionsWithIndex[j]] = [optionsWithIndex[j], optionsWithIndex[i]];
+                    [opts[i], opts[j]] = [opts[j], opts[i]];
                 }
-                const newOptions = optionsWithIndex.map(item => item.opt);
-                const newAnswerIndex = optionsWithIndex.findIndex(item => item.originalIdx === q.answer);
+                const newAnsIdx = opts.indexOf(correctOptText);
                 return {
-                    q: q.q,
-                    options: newOptions,
-                    answer: newAnswerIndex
+                    qOriginal: item.q,
+                    options: opts,
+                    answer: newAnsIdx
                 };
             });
 
-            for (let i = quizQuestions.length - 1; i > 0; i--) {
+            for (let i = list.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [quizQuestions[i], quizQuestions[j]] = [quizQuestions[j], quizQuestions[i]];
+                [list[i], list[j]] = [list[j], list[i]];
             }
+
+            // Re-assign display numbers 1 to 20 sequentially to prevent confusion
+            quizQuestions = list.map((item, index) => {
+                let cleanedText = item.q.replace(/^\d+\.\s*/, `${index + 1}. `);
+                return {
+                    q: cleanedText,
+                    options: item.options,
+                    answer: item.answer
+                };
+            });
         }
 
         regForm.addEventListener('submit', async function(e) {
@@ -532,7 +544,7 @@
             }
 
             quizActive = true;
-            timeLeft = 40;
+            timeLeft = 40; // 40 seconds timer
             document.getElementById('timer-display').textContent = timeLeft;
             document.getElementById('timer-bar').style.width = '100%';
 
@@ -594,7 +606,7 @@
             setTimeout(() => {
                 currentQuestionIndex++;
                 loadQuestion();
-            }, 1000);
+            }, 800);
         }
 
         function handleTimeOut() {
@@ -613,7 +625,7 @@
             setTimeout(() => {
                 currentQuestionIndex++;
                 loadQuestion();
-            }, 1000);
+            }, 800);
         }
 
         async function finishQuiz() {
