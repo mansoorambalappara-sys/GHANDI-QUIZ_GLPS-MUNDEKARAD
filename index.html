@@ -7,7 +7,950 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts for Anek Malayalam & Poppins -->
+    <link href="https://fonts.googleapis.com/c<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ഗാന്ധി ക്വിസ് - ജി.എൽ.പി സ്കൂൾ മുണ്ടേക്കരാട്</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Anek Malayalam & Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@400;500;600;700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- html2pdf.js for professional PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: 'Anek Malayalam', 'Poppins', sans-serif;
+        }
+        .card-3d {
+            box-shadow: 0 16px 35px -5px rgba(0, 0, 0, 0.15), 0 10px 15px -6px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        .card-3d:hover {
+            transform: translateY(-2px);
+        }
+        .btn-3d {
+            transition: all 0.2s ease;
+            box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.18), 0 3px 6px -2px rgba(0, 0, 0, 0.12);
+        }
+        .btn-3d:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-amber-100 via-orange-50 to-emerald-100 min-h-screen text-gray-800 flex flex-col justify-between selection:bg-emerald-500 selection:text-white">
+
+    <header class="bg-gradient-to-r from-emerald-700 to-emerald-800 text-white shadow-xl py-6 px-6 text-center border-b-4 border-emerald-900">
+        <h1 class="text-2xl md:text-3xl font-extrabold tracking-wide drop-shadow">ജി.എൽ.പി സ്കൂൾ മുണ്ടേക്കരാട്</h1>
+        <p class="text-sm md:text-base text-amber-200 mt-1 font-semibold">ഗാന്ധിജയന്തി സ്പെഷ്യൽ ഓൺലൈൻ ക്വിസ് മത്സരം</p>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 max-w-xl flex-grow flex items-center justify-center relative">
+        
+        <!-- 1. Registration Screen -->
+        <div id="screen-reg" class="bg-white/95 backdrop-blur-md rounded-3xl card-3d p-6 md:p-8 w-full border border-orange-200">
+            
+            <!-- Prominent Results Button at Top of Registration Card (Dynamically Controlled) -->
+            <div id="public-results-btn-container" class="mb-5 hidden">
+                <button onclick="openPublicResultsModal()" class="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white text-sm font-bold py-3.5 rounded-2xl btn-3d shadow-md flex items-center justify-center gap-2 animate-bounce">
+                    <span>🏆</span> ഔദ്യോഗിക മത്സര ഫലം പ്രസിദ്ധീകരിച്ചു! (View Results)
+                </button>
+            </div>
+
+            <div class="text-center mb-6">
+                <div class="inline-block p-4 bg-gradient-to-tr from-orange-100 to-amber-200 text-orange-600 rounded-2xl mb-3 text-4xl shadow-inner">🕊</div>
+                <h2 class="text-2xl font-bold text-gray-800">രജിസ്ട്രേഷൻ ഫോം</h2>
+                <p class="text-sm text-gray-500 mt-1">വിവരങ്ങൾ നൽകി ക്വിസ് മത്സരം ആരംഭിക്കുക</p>
+            </div>
+            
+            <form id="reg-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">രക്ഷിതാവിന്റെ പേര്</label>
+                    <input type="text" id="parent-name" placeholder="രക്ഷിതാവിന്റെ പേര് എഴുതുക" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-600 focus:outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">കുട്ടിയുടെ പേര്</label>
+                    <input type="text" id="child-name" placeholder="കുട്ടിയുടെ പേര് എഴുതുക" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-600 focus:outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">കുട്ടി പഠിക്കുന്ന ക്ലാസ്</label>
+                    <select id="child-class" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-600 focus:outline-none transition bg-white font-medium">
+                        <option value="">ക്ലാസ് തിരഞ്ഞെടുക്കുക</option>
+                        <option value="Pre-Primary (LKG / UKG)">Pre-Primary (LKG / UKG)</option>
+                        <option value="ഒന്നാം ക്ലാസ്">ഒന്നാം ക്ലാസ്</option>
+                        <option value="രണ്ടാം ക്ലാസ്">രണ്ടാം ക്ലാസ്</option>
+                        <option value="മൂന്നാം ക്ലാസ്">മൂന്നാം ക്ലാസ്</option>
+                        <option value="നാലാം ക്ലാസ്">നാലാം ക്ലാസ്</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">മൊബൈൽ നമ്പർ (10 അക്കം)</label>
+                    <input type="tel" id="mobile-number" pattern="[0-9]{10}" placeholder="ഉദാ: 9847123456" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-600 focus:outline-none transition">
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-bold py-4 rounded-2xl btn-3d mt-2 text-lg shadow-lg">
+                    ക്വിസ് ആരംഭിക്കുക 🚀
+                </button>
+            </form>
+
+            <!-- Admin Panel Launcher Button -->
+            <div class="mt-4 pt-4 border-t border-gray-100">
+                <button onclick="openAdminModal()" class="w-full bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-800 hover:to-slate-900 text-white text-sm font-bold py-3.5 rounded-2xl btn-3d shadow-md flex items-center justify-center gap-2">
+                    <span>🔐</span> അഡ്മിൻ പാനൽ (ടീച്ചേഴ്സ് ലോഞ്ച്)
+                </button>
+            </div>
+
+            <div id="reg-error" class="text-red-600 font-semibold text-sm text-center mt-3 hidden bg-red-50 p-3 rounded-xl border border-red-200"></div>
+        </div>
+
+        <!-- 2. Quiz Screen -->
+        <div id="screen-quiz" class="bg-white/95 backdrop-blur-md rounded-3xl card-3d p-6 md:p-8 w-full hidden border border-emerald-200">
+            <div class="flex justify-between items-center mb-5 border-b pb-4">
+                <span id="question-counter" class="text-sm font-bold text-emerald-800 bg-emerald-100 px-4 py-1.5 rounded-xl">ചോദ്യം 1 / 20</span>
+                <div class="flex items-center space-x-1 bg-amber-100 text-amber-800 px-4 py-1.5 rounded-xl font-bold text-sm shadow-inner">
+                    <span>⏱️</span>
+                    <span id="timer-display">50</span>s
+                </div>
+            </div>
+
+            <!-- Timer Progress Bar -->
+            <div class="w-full bg-gray-200 h-3 rounded-full mb-6 overflow-hidden shadow-inner">
+                <div id="timer-bar" class="bg-gradient-to-r from-amber-500 to-orange-500 h-full w-full transition-all duration-1000 linear rounded-full"></div>
+            </div>
+
+            <div class="mb-6 bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100 shadow-sm">
+                <h3 id="question-text" class="text-lg md:text-xl font-bold text-gray-900 leading-relaxed"></h3>
+            </div>
+
+            <div id="options-container" class="space-y-3">
+                <!-- Options injected via JavaScript -->
+            </div>
+        </div>
+
+        <!-- 3. Completion / Thank You Screen -->
+        <div id="screen-complete" class="bg-white/95 backdrop-blur-md rounded-3xl card-3d p-8 w-full text-center hidden border border-emerald-200">
+            <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-3xl flex items-center justify-center mx-auto text-4xl mb-4 shadow-inner">🏆</div>
+            <h2 class="text-2xl font-bold text-gray-900">നന്ദി! ക്വിസ് വിജയകരമായി പൂർത്തിയായി</h2>
+            <p class="text-gray-600 mt-3 text-sm md:text-base leading-relaxed font-medium">
+                നിങ്ങളുടെ ഉത്തരങ്ങൾ ഡാറ്റാബേസിൽ വിജയകരമായി രേഖപ്പെടുത്തിയിട്ടുണ്ട്. മുഴുവൻ മാർക്ക് നേടിയ വിജയികളുടെ വിവരങ്ങൾ സ്കൂൾ അധികൃതർ പരിശോധിച്ചു പ്രസിദ്ധീകരിക്കുന്നതായിരിക്കും.
+            </p>
+            <div class="mt-6 p-4 bg-amber-50 rounded-2xl border border-amber-200 text-amber-800 text-sm font-semibold shadow-sm">
+                📌 ഒരു മൊബൈൽ നമ്പറിൽ ഒരു പ്രാവശ്യം മാത്രമേ ഈ ക്വിസിൽ പങ്കെടുക്കാൻ സാധിക്കൂ.
+            </div>
+            <button onclick="location.reload()" class="mt-6 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-bold px-8 py-3.5 rounded-2xl btn-3d shadow-lg">
+                ഹോം പേജിലേക്ക് മടങ്ങുക
+            </button>
+        </div>
+    </main>
+
+    <!-- Admin Panel Modal -->
+    <div id="admin-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl p-6 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-100">
+            <div class="flex justify-between items-center mb-4 border-b pb-4">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-900">അഡ്മിൻ പാനൽ (ടീച്ചേഴ്സ് ലോഞ്ച്)</h3>
+                    <p class="text-xs text-gray-500">പങ്കെടുത്തവരുടെ സ്കോറുകൾ, ശരി/തെറ്റ് ഉത്തരങ്ങൾ, പ്രിന്റബിൾ PDF & വിജയികളെ പ്രഖ്യാപിക്കൽ</p>
+                </div>
+                <button onclick="closeAdminModal()" class="text-gray-400 hover:text-gray-800 text-2xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition">&times;</button>
+            </div>
+
+            <!-- Structured Winner Publishing Section -->
+            <div class="mb-6 bg-amber-50 p-4 rounded-2xl border border-amber-200">
+                <h4 class="font-bold text-amber-900 text-sm mb-3">📢 വിജയികളുടെ പട്ടിക പബ്ലിഷ് ചെയ്യുക / എഡിറ്റ് ചെയ്യുക</h4>
+                
+                <div class="space-y-4 mb-4">
+                    <!-- First Place -->
+                    <div class="bg-white p-3 rounded-xl border border-amber-200">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-bold text-xs text-amber-800">🥇 ഒന്നാം സ്ഥാനം (1st Place)</span>
+                            <button type="button" onclick="addWinnerRow('first')" class="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-2.5 py-1 rounded-lg font-bold">+ ആൾ ചേർക്കുക</button>
+                        </div>
+                        <div id="winners-first-container" class="space-y-2"></div>
+                    </div>
+
+                    <!-- Second Place -->
+                    <div class="bg-white p-3 rounded-xl border border-amber-200">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-bold text-xs text-amber-800">🥈 രണ്ടാം സ്ഥാനം (2nd Place)</span>
+                            <button type="button" onclick="addWinnerRow('second')" class="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-2.5 py-1 rounded-lg font-bold">+ ആൾ ചേർക്കുക</button>
+                        </div>
+                        <div id="winners-second-container" class="space-y-2"></div>
+                    </div>
+
+                    <!-- Third Place -->
+                    <div class="bg-white p-3 rounded-xl border border-amber-200">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-bold text-xs text-amber-800">🥉 മൂന്നാം സ്ഥാനം (3rd Place)</span>
+                            <button type="button" onclick="addWinnerRow('third')" class="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-2.5 py-1 rounded-lg font-bold">+ ആൾ ചേർക്കുക</button>
+                        </div>
+                        <div id="winners-third-container" class="space-y-2"></div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="publishStructuredResult()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-5 py-2.5 rounded-xl font-bold shadow">ഔദ്യോഗിക റിസൾട്ട് പബ്ലിഷ് / അപ്ഡേറ്റ് ചെയ്യുക</button>
+                    <button onclick="hideResult()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs px-5 py-2.5 rounded-xl font-bold shadow">പബ്ലിഷിംഗ് ഡിലീറ്റ് ചെയ്യുക / ക്ലിയർ ചെയ്യുക</button>
+                </div>
+            </div>
+
+            <div class="mb-4 flex flex-wrap gap-2">
+                <button onclick="downloadPDF()" class="bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-700 hover:to-rose-800 text-white text-xs px-4 py-2.5 rounded-xl font-bold btn-3d shadow flex items-center gap-1.5">
+                    <span>📄</span> പിഡിഎഫ് റിപ്പോർട്ട് ഡൗൺലോഡ് (A4 Format)
+                </button>
+                <button onclick="exportData()" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-xs px-4 py-2.5 rounded-xl font-bold btn-3d shadow">ജോസൺ (JSON) ഡൗൺലോഡ്</button>
+                <button onclick="clearCloudData()" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-xs px-4 py-2.5 rounded-xl font-bold btn-3d shadow">എല്ലാ ഡാറ്റയും ക്ലിയർ ചെയ്യുക</button>
+            </div>
+
+            <div id="admin-data-list" class="space-y-3">
+                <p class="text-gray-500 text-center py-6 font-medium">ഡാറ്റ ലോഡ് ചെയ്യുന്നു...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Printable PDF Template Container (A4 Optimized) -->
+    <div id="pdf-export-container" class="hidden p-8 bg-white text-gray-800 font-sans max-w-[210mm] mx-auto">
+        <div class="text-center mb-6 border-b-2 pb-4 border-emerald-700">
+            <h1 class="text-2xl font-extrabold text-emerald-800">ജി.എൽ.പി സ്കൂൾ മുണ്ടേക്കരാട്</h1>
+            <h2 class="text-base font-bold text-gray-700 mt-1">ഗാന്ധി ജയന്തി ക്വിസ് മത്സരം - പങ്കെടുത്ത മുഴുവൻ വിദ്യാർത്ഥികളുടെയും റിപ്പോർട്ട്</h2>
+            <p class="text-xs text-gray-500 mt-1" id="pdf-export-date"></p>
+        </div>
+        <table class="w-full border-collapse border border-gray-400 text-xs">
+            <thead>
+                <tr class="bg-emerald-700 text-white">
+                    <th class="border border-gray-400 p-2">ക്രമ നമ്പർ</th>
+                    <th class="border border-gray-400 p-2">രക്ഷിതാവ്</th>
+                    <th class="border border-gray-400 p-2">കുട്ടി</th>
+                    <th class="border border-gray-400 p-2">ക്ലാസ്</th>
+                    <th class="border border-gray-400 p-2">ഫോൺ</th>
+                    <th class="border border-gray-400 p-2">ശരി</th>
+                    <th class="border border-gray-400 p-2">തെറ്റ്</th>
+                    <th class="border border-gray-400 p-2">സ്കോർ</th>
+                    <th class="border border-gray-400 p-2">സമയം</th>
+                </tr>
+            </thead>
+            <tbody id="pdf-table-body"></tbody>
+        </table>
+    </div>
+
+    <!-- Public Results Modal -->
+    <div id="public-results-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl p-6 md:p-8 max-w-lg w-full shadow-2xl border border-gray-100 text-center max-h-[85vh] overflow-y-auto">
+            <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mx-auto text-3xl mb-3 shadow-inner">🏆</div>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">ഗാന്ധി ക്വിസ് ഔദ്യോഗിക വിജയികൾ</h3>
+            <div id="public-results-content" class="p-4 bg-amber-50/70 rounded-2xl border border-amber-200 text-sm font-semibold text-gray-800 mb-6 text-left space-y-4"></div>
+            <button onclick="closePublicResultsModal()" class="bg-slate-800 text-white px-6 py-2.5 rounded-xl font-bold text-xs">മടങ്ങുക</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, doc, setDoc, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'mundakkarad-gandhi-quiz-2026';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            apiKey: "AIzaSyDummyKeyForArtifactsRuntimeEnvironment",
+            authDomain: "artifact-runtime.firebaseapp.com",
+            projectId: "artifact-runtime",
+            storageBucket: "artifact-runtime.appspot.com",
+            messagingSenderId: "1234567890",
+            appId: "1:1234567890:web:abcdef"
+        };
+
+        let db = null;
+        let auth = null;
+
+        try {
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+        } catch (e) {
+            console.warn("Firebase init skipped/failed, falling back to local storage.", e);
+        }
+
+        // Hybrid storage helpers supporting 100+ participants
+        window.getAllParticipants = async function() {
+            let participants = [];
+            try {
+                const localData = localStorage.getItem('mundakkarad_participants');
+                if (localData) {
+                    participants = JSON.parse(localData);
+                }
+            } catch(e) { console.error(e); }
+
+            if (db && auth) {
+                try {
+                    if (!auth.currentUser) {
+                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                            await signInWithCustomToken(auth, __initial_auth_token);
+                        } else {
+                            await signInAnonymously(auth);
+                        }
+                    }
+                    const snapshot = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'participants'));
+                    let cloudList = [];
+                    snapshot.forEach(docSnap => {
+                        cloudList.push(docSnap.data());
+                    });
+                    if (cloudList.length > 0) {
+                        participants = cloudList;
+                        localStorage.setItem('mundakkarad_participants', JSON.stringify(participants));
+                    }
+                } catch(e) {
+                    console.warn("Cloud fetch fallback to local:", e);
+                }
+            }
+            return participants;
+        };
+
+        window.saveParticipantToStorage = async function(userData) {
+            try {
+                let participants = [];
+                const localData = localStorage.getItem('mundakkarad_participants');
+                if (localData) {
+                    participants = JSON.parse(localData);
+                }
+                participants = participants.filter(p => p.mobile !== userData.mobile);
+                participants.push(userData);
+                localStorage.setItem('mundakkarad_participants', JSON.stringify(participants));
+            } catch(e) { console.error(e); }
+
+            if (db && auth) {
+                try {
+                    const docId = `mobile_${userData.mobile}`;
+                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'participants', docId);
+                    await setDoc(docRef, userData);
+                } catch(e) {
+                    console.warn("Cloud save error:", e);
+                }
+            }
+        };
+
+        window.clearAllParticipantsStorage = async function() {
+            localStorage.removeItem('mundakkarad_participants');
+            if (db && auth) {
+                try {
+                    const snapshot = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'participants'));
+                    const deletePromises = snapshot.docs.map(d => deleteDoc(d.ref));
+                    await Promise.all(deletePromises);
+                } catch(e) { console.error(e); }
+            }
+        };
+
+        window.savePublishedResultStorage = async function(structuredData) {
+            localStorage.setItem('mundakkarad_published_results', JSON.stringify(structuredData));
+            if (db && auth) {
+                try {
+                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'published_results');
+                    await setDoc(docRef, structuredData);
+                } catch(e) { console.error(e); }
+            }
+            document.getElementById('public-results-btn-container').classList.remove('hidden');
+        };
+
+        window.removePublishedResultStorage = async function() {
+            localStorage.removeItem('mundakkarad_published_results');
+            if (db && auth) {
+                try {
+                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'published_results');
+                    await deleteDoc(docRef);
+                } catch(e) { console.error(e); }
+            }
+            document.getElementById('public-results-btn-container').classList.add('hidden');
+        };
+
+        window.checkPublishedResultsOnLoad = async function() {
+            try {
+                let pub = localStorage.getItem('mundakkarad_published_results');
+                if (pub) {
+                    document.getElementById('public-results-btn-container').classList.remove('hidden');
+                    return;
+                }
+                
+                if (db && auth) {
+                    if (!auth.currentUser) {
+                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                            await signInWithCustomToken(auth, __initial_auth_token);
+                        } else {
+                            await signInAnonymously(auth);
+                        }
+                    }
+                    const snapshot = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'settings'));
+                    snapshot.forEach(docSnap => {
+                        if (docSnap.id === 'published_results') {
+                            localStorage.setItem('mundakkarad_published_results', JSON.stringify(docSnap.data()));
+                            document.getElementById('public-results-btn-container').classList.remove('hidden');
+                        }
+                    });
+                }
+            } catch(e) {
+                console.warn("Could not check published results:", e);
+            }
+        };
+
+        window.checkPublishedResultsOnLoad();
+    </script>
+
+    <script>
+        const baseQuizQuestions = [
+            {
+                q: "മഹാത്മാ ഗാന്ധിയുടെ ജനനം എപ്പോഴാണ്?",
+                options: ["1869 ഒക്ടോബർ 2", "1857 ജനുവരി 15", "1947 ആഗസ്റ്റ് 15", "1869 നവംബർ 14"],
+                answer: 0
+            },
+            {
+                q: "ഗാന്ധിജിയുടെ ജന്മസ്ഥലം എവിടെയാണ്?",
+                options: ["പോർബന്തർ (ഗുജറാത്ത്)", "ഡൽഹി", "കൊൽക്കത്ത", "മുംബൈ"],
+                answer: 0
+            },
+            {
+                q: "മഹാത്മാ ഗാന്ധിയുടെ പൂർണ്ണമായ പേര് എന്താണ്?",
+                options: ["മോഹൻദാസ് കരംചന്ദ് ഗാന്ധി", "രാംദാസ് ഗാന്ധി", "കരംചന്ദ് ഗാന്ധി", "ഹരിലാൽ ഗാന്ധി"],
+                answer: 0
+            },
+            {
+                q: "ഗാന്ധിജിയുടെ അമ്മയുടെ പേര് എന്തായിരുന്നു?",
+                options: ["കസ്തൂർബാ", "പുത്ലീബായ്", "മീരാബായ്", "കമല നെഹ്റു"],
+                answer: 1
+            },
+            {
+                q: "ഇന്ത്യയുടെ സ്വാതന്ത്ര്യസമരത്തിൽ ഗാന്ധിജി നയിച്ച പ്രശസ്തമായ ഉപ്പ് യാത്ര (Dandi March) ആരംഭിച്ച വർഷം?",
+                options: ["1920", "1930", "1942", "1947"],
+                answer: 1
+            },
+            {
+                q: "അഹിംസയുടെയും സത്യാഗ്രഹത്തിന്റെയും പ്രവാചകൻ എന്നറിയപ്പെടുന്നതാര്?",
+                options: ["സുഭാഷ് ചന്ദ്രബോസ്", "ജവഹർലാൽ നെഹ്റു", "മഹാത്മാ ഗാന്ധി", "സർദാർ വല്ലഭഭായ് പട്ടേൽ"],
+                answer: 2
+            },
+            {
+                q: "ഗാന്ധിജി അന്തരിച്ചതെന്ന്?",
+                options: ["1948 ജനുവരി 30", "1947 ആഗസ്റ്റ് 15", "1950 ജനുവരി 26", "1948 ഒക്ടോബർ 2"],
+                answer: 0
+            },
+            {
+                q: "ഗാന്ധിജിയുടെ ആത്മകഥയുടെ പേരെന്ത്?",
+                options: ["സത്യത്തോടുള്ള എന്റെ പരീക്ഷണങ്ങൾ", "എന്റെ കഥ", "ഇന്ത്യയുടെ കണ്ടെത്തൽ", "ഗീതാഞ്ജലി"],
+                answer: 0
+            },
+            {
+                q: "ഇന്ത്യയിൽ ദേശീയ ഗാന്ധി ജയന്തി ആചരിക്കുന്ന ദിവസം?",
+                options: ["ജനുവരി 26", "നവംബർ 14", "ഒക്ടോബർ 2", "ആഗസ്റ്റ് 15"],
+                answer: 2
+            },
+            {
+                q: "1942-ൽ ഗാന്ധിജി ആഹ്വാനം ചെയ്ത പ്രശസ്തമായ സമരം ഏത്?",
+                options: ["നിസ്സഹകരണ പ്രസ്ഥാനം", "ക്വിറ്റ് ഇന്ത്യ സമരം", "ഉപ്പ് സത്യാഗ്രഹം", "പൂർണ്ണ സ്വരാജ്"],
+                answer: 1
+            },
+            {
+                q: "ഗാന്ധിജി തന്റെ രാഷ്ട്രീയ ഗുരു ആയി കണക്കാക്കിയിരുന്നത് ആരെയാണ്?",
+                options: ["ബാലഗംഗാധര തിലക്", "ഗോപാലകൃഷ്ണ ഗോഖലെ", "രവീന്ദ്രനാഥ ടാഗോർ", "ദാദാഭായ് നവറോജി"],
+                answer: 1
+            },
+            {
+                q: "ഗാന്ധിജിയെ 'മഹാത്മാ' എന്ന് ആദ്യമായി വിശേഷിപ്പിച്ചത് ആര്?",
+                options: ["രവീന്ദ്രനാഥ ടാഗോർ", "സുഭാഷ് ചന്ദ്രബോസ്", "സർദാർ പട്ടേൽ", "ഡോ. ബി.ആർ. അംബേദ്കർ"],
+                answer: 0
+            },
+            {
+                q: "ഗാന്ധിജിയെ 'രാഷ്ട്രപിതാവ്' എന്ന് ആദ്യമായി അഭിസംബോധന ചെയ്തത് ആര്?",
+                options: ["സുഭാഷ് ചന്ദ്രബോസ്", "ജവഹർലാൽ നെഹ്റു", "സർദാർ വല്ലഭഭായ് പട്ടേൽ", "മൗലാന ആസാദ്"],
+                answer: 0
+            },
+            {
+                q: "സബർമതി ആശ്രമം സ്ഥിതി ചെയ്യുന്ന സംസ്ഥാനം ഏത്?",
+                options: ["മഹാരാഷ്ട്ര", "ഗുജറാത്ത്", "ബീഹാർ", "ഉത്തർപ്രദേശ്"],
+                answer: 1
+            },
+            {
+                q: "ഗാന്ധിജി ദണ്ഡി യാത്ര ആരംഭിച്ചത് എവിടെ നിന്നാണ്?",
+                options: ["സബർമതി ആശ്രമം", "അഹമ്മദാബാദ് നഗരം", "പോർബന്തർ", "ബോംബെ"],
+                answer: 0
+            },
+            {
+                q: "ഗാന്ധിജിയുടെ വിശ്രമ സ്ഥലമായ 'രാജ്ഘട്ട്' എവിടെയാണ് സ്ഥിതി ചെയ്യുന്നത്?",
+                options: ["മുംബൈ", "ന്യൂഡൽഹി", "കൊൽക്കത്ത", "അഹമ്മദാബാദ്"],
+                answer: 1
+            },
+            {
+                q: "താഴെ പറയുന്നവരിൽ ഗാന്ധിജിയുടെ പത്നി ആര്?",
+                options: ["കസ്തൂർബാ ഗാന്ധി", "ഇന്ദിരാഗാന്ധി", "സരോജിനി നായിഡു", "ആനി ബസന്റ്"],
+                answer: 0
+            },
+            {
+                q: "ഗാന്ധിജി പ്രധാനമായും ഊന്നൽ നൽകിയ രണ്ട് പ്രധാന തത്വങ്ങൾ ഏവ?",
+                options: ["സത്യവും അഹിംസയും", "ധനവും അധികാരവും", "ശാസ്ത്രവും സാങ്കേതികവിദ്യയും", "കായികാഭ്യാസവും ആയുധങ്ങളും"],
+                answer: 0
+            },
+            {
+                q: "ബ്രിട്ടീഷുകാർക്കെതിരെ ഗാന്ധിജി ഇന്ത്യയിൽ ആദ്യം നടത്തിയ സത്യാഗ്രഹ സമരം എവിടെയായിരുന്നു?",
+                options: ["ചമ്പാരൻ (ബീഹാർ)", "ഖേഡ", "ഗുജറാത്ത്", "അമൃത്സർ"],
+                answer: 0
+            },
+            {
+                q: "ഗാന്ധിജി വിഭാവനം ചെയ്ത ഗ്രാമസ്വരാജ് ആശയത്തിന്റെ പ്രധാന ലക്ഷ്യമെന്തായിരുന്നു?",
+                options: ["ഗ്രാമങ്ങളുടെ സ്വയംപര്യാപ്തത", "നഗരവൽക്കരണം", "വ്യാവസായികവൽക്കരണം", "വിദേശ കയറ്റുമതി"],
+                answer: 0
+            }
+        ];
+
+        let quizQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let timer = null;
+        let timeLeft = 50;
+        let userData = {};
+        let quizActive = false;
+
+        const screenReg = document.getElementById('screen-reg');
+        const screenQuiz = document.getElementById('screen-quiz');
+        const screenComplete = document.getElementById('screen-complete');
+        const regForm = document.getElementById('reg-form');
+        const regError = document.getElementById('reg-error');
+
+        function prepareShuffledQuiz() {
+            quizQuestions = baseQuizQuestions.map(q => {
+                let optionsWithIndex = q.options.map((opt, idx) => ({ opt, originalIdx: idx }));
+                for (let i = optionsWithIndex.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [optionsWithIndex[i], optionsWithIndex[j]] = [optionsWithIndex[j], optionsWithIndex[i]];
+                }
+                const newOptions = optionsWithIndex.map(item => item.opt);
+                const newAnswerIndex = optionsWithIndex.findIndex(item => item.originalIdx === q.answer);
+                return {
+                    q: q.q,
+                    options: newOptions,
+                    answer: newAnswerIndex
+                };
+            });
+
+            for (let i = quizQuestions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [quizQuestions[i], quizQuestions[j]] = [quizQuestions[j], quizQuestions[i]];
+            }
+        }
+
+        regForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const parentName = document.getElementById('parent-name').value.trim();
+            const childName = document.getElementById('child-name').value.trim();
+            const childClass = document.getElementById('child-class').value;
+            const mobileNumber = document.getElementById('mobile-number').value.trim();
+
+            if (mobileNumber.length !== 10 || isNaN(mobileNumber)) {
+                regError.textContent = "ദയവായി കൃത്യമായ 10 അക്ക മൊബൈൽ നമ്പർ നൽകുക.";
+                regError.classList.remove('hidden');
+                return;
+            }
+
+            let participants = await window.getAllParticipants();
+            const existing = participants.find(p => p.mobile === mobileNumber);
+
+            if (existing) {
+                regError.textContent = "ഈ മൊബൈൽ നമ്പർ ഉപയോഗിച്ച് ഇതിനകം ക്വിസിൽ പങ്കെടുത്തിട്ടുണ്ട്. ഒരാൾക്ക് ഒരു തവണ മാത്രമേ അവസരമുള്ളൂ.";
+                regError.classList.remove('hidden');
+                return;
+            }
+
+            userData = {
+                parentName,
+                childName,
+                childClass,
+                mobile: mobileNumber,
+                timestamp: new Date().toLocaleString()
+            };
+
+            prepareShuffledQuiz();
+            screenReg.classList.add('hidden');
+            screenQuiz.classList.remove('hidden');
+            startQuiz();
+        });
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            correctCount = 0;
+            incorrectCount = 0;
+            quizActive = true;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= quizQuestions.length) {
+                finishQuiz();
+                return;
+            }
+
+            quizActive = true;
+            timeLeft = 50;
+            document.getElementById('timer-display').textContent = timeLeft;
+            document.getElementById('timer-bar').style.width = '100%';
+
+            const qObj = quizQuestions[currentQuestionIndex];
+            document.getElementById('question-counter').textContent = `ചോദ്യം ${currentQuestionIndex + 1} / ${quizQuestions.length}`;
+            document.getElementById('question-text').textContent = `${currentQuestionIndex + 1}. ${qObj.q}`;
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            qObj.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = "w-full text-left p-4 rounded-2xl border-2 border-gray-200 hover:border-emerald-500 hover:bg-emerald-50/80 font-bold transition duration-150 flex items-center justify-between group shadow-sm";
+                btn.innerHTML = `<span class="text-gray-800">${opt}</span> <span class="w-8 h-8 rounded-xl border-2 border-gray-300 flex items-center justify-center text-xs text-gray-500 group-hover:border-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition font-bold">${String.fromCharCode(65 + idx)}</span>`;
+                btn.onclick = () => selectOption(idx);
+                optionsContainer.appendChild(btn);
+            });
+
+            clearInterval(timer);
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer-display').textContent = timeLeft;
+                const percentage = (timeLeft / 50) * 100;
+                document.getElementById('timer-bar').style.width = `${percentage}%`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    handleTimeOut();
+                }
+            }, 1000);
+        }
+
+        function selectOption(selectedIndex) {
+            if (!quizActive) return;
+            quizActive = false;
+            clearInterval(timer);
+
+            const qObj = quizQuestions[currentQuestionIndex];
+            const optionsContainer = document.getElementById('options-container');
+            const buttons = optionsContainer.getElementsByTagName('button');
+
+            for (let btn of buttons) {
+                btn.disabled = true;
+                btn.classList.add('cursor-not-allowed', 'opacity-85');
+            }
+
+            if (selectedIndex === qObj.answer) {
+                buttons[selectedIndex].classList.remove('border-gray-200', 'hover:bg-emerald-50/80');
+                buttons[selectedIndex].classList.add('bg-emerald-100', 'border-emerald-600', 'text-emerald-900', 'shadow-md');
+                score += (10 + Math.floor(timeLeft / 5));
+                correctCount++;
+            } else {
+                buttons[selectedIndex].classList.remove('border-gray-200');
+                buttons[selectedIndex].classList.add('bg-red-100', 'border-red-500', 'text-red-900', 'shadow-md');
+                
+                buttons[qObj.answer].classList.remove('border-gray-200');
+                buttons[qObj.answer].classList.add('bg-emerald-100', 'border-emerald-600', 'text-emerald-900', 'shadow-md');
+                incorrectCount++;
+            }
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                loadQuestion();
+            }, 1200);
+        }
+
+        function handleTimeOut() {
+            if (!quizActive) return;
+            quizActive = false;
+            incorrectCount++;
+
+            const qObj = quizQuestions[currentQuestionIndex];
+            const optionsContainer = document.getElementById('options-container');
+            const buttons = optionsContainer.getElementsByTagName('button');
+
+            for (let btn of buttons) {
+                btn.disabled = true;
+                btn.classList.add('cursor-not-allowed', 'opacity-85');
+            }
+
+            buttons[qObj.answer].classList.remove('border-gray-200');
+            buttons[qObj.answer].classList.add('bg-amber-100', 'border-amber-500', 'text-amber-900', 'shadow-md');
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                loadQuestion();
+            }, 1200);
+        }
+
+        async function finishQuiz() {
+            clearInterval(timer);
+            screenQuiz.classList.add('hidden');
+            screenComplete.classList.remove('hidden');
+
+            userData.score = score;
+            userData.correctCount = correctCount;
+            userData.incorrectCount = incorrectCount;
+            userData.totalQuestions = quizQuestions.length;
+
+            await window.saveParticipantToStorage(userData);
+        }
+
+        async function openAdminModal() {
+            const pwd = prompt("അഡ്മിൻ പാസ്‌വേഡ് നൽകുക:");
+            if (pwd === "admin123") {
+                await renderAdminData();
+                loadSavedStructuredWinners();
+                document.getElementById('admin-modal').classList.remove('hidden');
+            } else if (pwd !== null) {
+                let customMsg = document.createElement('div');
+                customMsg.className = "fixed top-5 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-6 py-3 rounded-2xl shadow-xl font-bold z-50 text-sm";
+                customMsg.textContent = "തെറ്റായ പാസ്‌വേഡ്!";
+                document.body.appendChild(customMsg);
+                setTimeout(() => customMsg.remove(), 2500);
+            }
+        }
+
+        function closeAdminModal() {
+            document.getElementById('admin-modal').classList.add('hidden');
+        }
+
+        async function renderAdminData() {
+            const listContainer = document.getElementById('admin-data-list');
+            listContainer.innerHTML = '<p class="text-gray-500 text-center py-6 font-medium">ഡാറ്റ ലോഡ് ചെയ്യുന്നു...</p>';
+            
+            let participants = await window.getAllParticipants();
+
+            if (participants.length === 0) {
+                listContainer.innerHTML = '<p class="text-gray-500 text-center py-6 font-medium">ഇതുവരെ ആരും ക്വിസിൽ പങ്കെടുത്തിട്ടില്ല.</p>';
+                return;
+            }
+
+            participants.sort((a, b) => b.score - a.score);
+
+            let html = `<div class="text-xs font-bold text-gray-500 mb-2">ആകെ പങ്കെടുത്തവർ: ${participants.length}</div>`;
+            participants.forEach((p, index) => {
+                html += `
+                    <div class="p-4 bg-gray-50 rounded-2xl border border-gray-200 text-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-2 shadow-sm">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-lg text-xs">#${index + 1}</span>
+                                <span class="font-bold text-gray-900">${p.parentName}</span> 
+                                <span class="text-xs bg-orange-100 text-orange-800 px-2 py-0.5 rounded-md font-bold">${p.childClass}</span>
+                            </div>
+                            <div class="text-xs text-gray-600 mt-1">കുട്ടി: <span class="font-semibold text-emerald-700">${p.childName}</span> | ഫോൺ: <span class="font-semibold">${p.mobile}</span></div>
+                            <div class="text-xs text-gray-700 mt-1 flex gap-3 font-semibold">
+                                <span class="text-emerald-700">ശരി ഉത്തരങ്ങൾ: ${p.correctCount || 0}</span>
+                                <span class="text-rose-600">തെറ്റ്/ഒഴിവായത്: ${p.incorrectCount || 0}</span>
+                            </div>
+                            <div class="text-[10px] text-gray-400 mt-0.5">സമയം: ${p.timestamp}</div>
+                        </div>
+                        <div class="flex items-center gap-2 self-end md:self-center">
+                            <span class="bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-xl text-xs shadow-sm">സ്കോർ: ${p.score}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            listContainer.innerHTML = html;
+        }
+
+        function initWinnerRows(data = null) {
+            document.getElementById('winners-first-container').innerHTML = '';
+            document.getElementById('winners-second-container').innerHTML = '';
+            document.getElementById('winners-third-container').innerHTML = '';
+
+            if (data && data.first && data.first.length > 0) {
+                data.first.forEach(w => addWinnerRow('first', w.parent, w.child, w.class));
+            } else {
+                addWinnerRow('first');
+            }
+
+            if (data && data.second && data.second.length > 0) {
+                data.second.forEach(w => addWinnerRow('second', w.parent, w.child, w.class));
+            } else {
+                addWinnerRow('second');
+            }
+
+            if (data && data.third && data.third.length > 0) {
+                data.third.forEach(w => addWinnerRow('third', w.parent, w.child, w.class));
+            } else {
+                addWinnerRow('third');
+            }
+        }
+
+        function addWinnerRow(place, parentVal = '', childVal = '', classVal = '') {
+            const container = document.getElementById(`winners-${place}-container`);
+            const div = document.createElement('div');
+            div.className = "flex flex-col md:flex-row gap-2 items-center bg-gray-50 p-2 rounded-xl border border-gray-200";
+            div.innerHTML = `
+                <input type="text" placeholder="രക്ഷിതാവിന്റെ പേര്" value="${parentVal}" class="winner-parent w-full md:w-1/3 p-2 border rounded-lg text-xs bg-white focus:outline-none">
+                <input type="text" placeholder="കുട്ടിയുടെ പേര്" value="${childVal}" class="winner-child w-full md:w-1/3 p-2 border rounded-lg text-xs bg-white focus:outline-none">
+                <select class="winner-class w-full md:w-1/4 p-2 border rounded-lg text-xs bg-white focus:outline-none">
+                    <option value="">ക്ലാസ് തിരഞ്ഞെടുക്കുക</option>
+                    <option value="Pre-Primary (LKG / UKG)" ${classVal === 'Pre-Primary (LKG / UKG)' ? 'selected' : ''}>Pre-Primary (LKG / UKG)</option>
+                    <option value="ഒന്നാം ക്ലാസ്" ${classVal === 'ഒന്നാം ക്ലാസ്' ? 'selected' : ''}>ഒന്നാം ക്ലാസ്</option>
+                    <option value="രണ്ടാം ക്ലാസ്" ${classVal === 'രണ്ടാം ക്ലാസ്' ? 'selected' : ''}>രണ്ടാം ക്ലാസ്</option>
+                    <option value="മൂന്നാം ക്ലാസ്" ${classVal === 'മൂന്നാം ക്ലാസ്' ? 'selected' : ''}>മൂന്നാം ക്ലാസ്</option>
+                    <option value="നാലാം ക്ലാസ്" ${classVal === 'നാലാം ക്ലാസ്' ? 'selected' : ''}>നാലാം ക്ലാസ്</option>
+                </select>
+                <button type="button" onclick="this.parentElement.remove()" class="text-red-500 font-bold px-2 py-1 hover:bg-red-50 rounded-lg text-xs">&times;</button>
+            `;
+            container.appendChild(div);
+        }
+
+        function collectWinnersData(place) {
+            const container = document.getElementById(`winners-${place}-container`);
+            const rows = container.children;
+            let list = [];
+            for (let row of rows) {
+                const parent = row.querySelector('.winner-parent').value.trim();
+                const child = row.querySelector('.winner-child').value.trim();
+                const cls = row.querySelector('.winner-class').value;
+                if (parent || child) {
+                    list.push({ parent, child, class: cls });
+                }
+            }
+            return list;
+        }
+
+        async function publishStructuredResult() {
+            const winnersData = {
+                first: collectWinnersData('first'),
+                second: collectWinnersData('second'),
+                third: collectWinnersData('third')
+            };
+
+            if (winnersData.first.length === 0 && winnersData.second.length === 0 && winnersData.third.length === 0) {
+                alert("ദയവായി കുറഞ്ഞത് ഒരു വിജയിയുടെ വിവരമെങ്കിലും നൽകുക.");
+                return;
+            }
+
+            await window.savePublishedResultStorage(winnersData);
+            alert("മത്സര ഫലം വിജയകരമായി പബ്ലിഷ് / അപ്ഡേറ്റ് ചെയ്തു!");
+        }
+
+        function loadSavedStructuredWinners() {
+            try {
+                const saved = localStorage.getItem('mundakkarad_published_results');
+                if (saved) {
+                    initWinnerRows(JSON.parse(saved));
+                } else {
+                    initWinnerRows();
+                }
+            } catch(e) {
+                initWinnerRows();
+            }
+        }
+
+        async function hideResult() {
+            await window.removePublishedResultStorage();
+            initWinnerRows();
+            alert("ഫലം പബ്ലിഷിംഗ് പൂർണ്ണമായി നീക്കം ചെയ്തു.");
+        }
+
+        async function openPublicResultsModal() {
+            const contentContainer = document.getElementById('public-results-content');
+            let saved = null;
+            try {
+                const local = localStorage.getItem('mundakkarad_published_results');
+                if (local) saved = JSON.parse(local);
+            } catch(e) {}
+            
+            if (!saved) {
+                contentContainer.innerHTML = '<p class="text-center text-gray-500">ഫലം ഉടൻ പ്രസിദ്ധീകരിക്കുന്നതാണ്.</p>';
+            } else {
+                try {
+                    let html = '';
+
+                    const renderCategory = (title, emoji, items) => {
+                        if (!items || items.length === 0) return '';
+                        let block = `<div class="mb-3"><div class="font-bold text-amber-900 text-xs mb-1">${emoji} ${title}</div>`;
+                        items.forEach(w => {
+                            block += `<div class="bg-white p-2 rounded-xl mb-1.5 border border-amber-200 text-xs text-gray-800">
+                                <span class="font-bold text-emerald-800">രക്ഷിതാവ്:</span> ${w.parent || '-'}<br>
+                                <span class="font-bold text-emerald-800">കുട്ടി:</span> ${w.child || '-'} <span class="text-gray-500">(${w.class || '-'})</span>
+                            </div>`;
+                        });
+                        block += `</div>`;
+                        return block;
+                    };
+
+                    html += renderCategory('ഒന്നാം സ്ഥാനം (1st Place)', '🥇', saved.first);
+                    html += renderCategory('രണ്ടാം സ്ഥാനം (2nd Place)', '🥈', saved.second);
+                    html += renderCategory('മൂന്നാം സ്ഥാനം (3rd Place)', '🥉', saved.third);
+
+                    contentContainer.innerHTML = html;
+                } catch(e) {
+                    contentContainer.innerHTML = '<p class="text-center text-gray-500">വിവരങ്ങൾ ലഭ്യമാക്കുന്നതിൽ തടസം നേരിട്ടു.</p>';
+                }
+            }
+
+            document.getElementById('public-results-modal').classList.remove('hidden');
+        }
+
+        function closePublicResultsModal() {
+            document.getElementById('public-results-modal').classList.add('hidden');
+        }
+
+        async function downloadPDF() {
+            let participants = await window.getAllParticipants();
+            if (participants.length === 0) {
+                alert("ഡൗൺലോഡ് ചെയ്യാൻ ഡാറ്റകളൊന്നുമില്ല!");
+                return;
+            }
+
+            participants.sort((a, b) => b.score - a.score);
+
+            document.getElementById('pdf-export-date').textContent = "റിപ്പോർട്ട് തയ്യാറാക്കിയ തീയതി: " + new Date().toLocaleString();
+            let tbody = document.getElementById('pdf-table-body');
+            tbody.innerHTML = '';
+
+            participants.forEach((p, idx) => {
+                let row = `
+                    <tr>
+                        <td class="border border-gray-400 p-2 text-center font-bold">${idx + 1}</td>
+                        <td class="border border-gray-400 p-2">${p.parentName}</td>
+                        <td class="border border-gray-400 p-2 font-bold text-emerald-800">${p.childName}</td>
+                        <td class="border border-gray-400 p-2">${p.childClass}</td>
+                        <td class="border border-gray-400 p-2 text-center">${p.mobile}</td>
+                        <td class="border border-gray-400 p-2 text-center text-emerald-700 font-bold">${p.correctCount || 0}</td>
+                        <td class="border border-gray-400 p-2 text-center text-rose-600 font-bold">${p.incorrectCount || 0}</td>
+                        <td class="border border-gray-400 p-2 text-center font-bold text-emerald-900">${p.score}</td>
+                        <td class="border border-gray-400 p-2 text-center text-[10px]">${p.timestamp}</td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+
+            const element = document.getElementById('pdf-export-container');
+            element.classList.remove('hidden');
+
+            const opt = {
+                margin:       [10, 10, 10, 10],
+                filename:     'Mundakkarad_Gandhi_Quiz_Report.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().from(element).set(opt).save().then(() => {
+                element.classList.add('hidden');
+            });
+        }
+
+        async function exportData() {
+            let participants = await window.getAllParticipants();
+            let blob = new Blob([JSON.stringify(participants, null, 2)], { type: 'application/json' });
+            let url = URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = 'mundakkarad_gandhi_quiz_results.json';
+            a.click();
+        }
+
+        async function clearCloudData() {
+            if (confirm("എല്ലാ ഡാറ്റയും ക്ലിയർ ചെയ്യണമെന്നുറപ്പാണോ?")) {
+                await window.clearAllParticipantsStorage();
+                await renderAdminData();
+            }
+        }
+    </script>
+</body>
+</html>ss2?family=Anek+Malayalam:wght@400;500;600;700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- html2pdf.js for professional PDF generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
