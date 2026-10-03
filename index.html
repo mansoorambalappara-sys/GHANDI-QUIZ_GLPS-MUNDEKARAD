@@ -43,7 +43,7 @@
         <!-- 1. Registration Screen -->
         <div id="screen-reg" class="bg-white/95 backdrop-blur-md rounded-3xl card-3d p-6 md:p-8 w-full border border-orange-200">
             
-            <!-- Prominent Results Button at Top of Registration Card -->
+            <!-- Prominent Results Button at Top of Registration Card (Dynamically Controlled) -->
             <div id="public-results-btn-container" class="mb-5 hidden">
                 <button onclick="openPublicResultsModal()" class="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white text-sm font-bold py-3.5 rounded-2xl btn-3d shadow-md flex items-center justify-center gap-2 animate-bounce">
                     <span>🏆</span> ഔദ്യോഗിക മത്സര ഫലം പ്രസിദ്ധീകരിച്ചു! (View Results)
@@ -51,7 +51,7 @@
             </div>
 
             <div class="text-center mb-6">
-                <div class="inline-block p-4 bg-gradient-to-tr from-orange-100 to-amber-200 text-orange-600 rounded-2xl mb-3 text-4xl shadow-inner">🕊️</div>
+                <div class="inline-block p-4 bg-gradient-to-tr from-orange-100 to-amber-200 text-orange-600 rounded-2xl mb-3 text-4xl shadow-inner">🕊️️</div>
                 <h2 class="text-2xl font-bold text-gray-800">രജിസ്ട്രേഷൻ ഫോം</h2>
                 <p class="text-sm text-gray-500 mt-1">വിവരങ്ങൾ നൽകി ക്വിസ് മത്സരം ആരംഭിക്കുക</p>
             </div>
@@ -124,7 +124,7 @@
             <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-3xl flex items-center justify-center mx-auto text-4xl mb-4 shadow-inner">🏆</div>
             <h2 class="text-2xl font-bold text-gray-900">നന്ദി! ക്വിസ് വിജയകരമായി പൂർത്തിയായി</h2>
             <p class="text-gray-600 mt-3 text-sm md:text-base leading-relaxed font-medium">
-                നിങ്ങളുടെ ഉത്തരങ്ങൾ ക്ലൗഡ് ഡാറ്റാബേസിൽ വിജയകരമായി രേഖപ്പെടുത്തിയിട്ടുണ്ട്. മുഴുവൻ മാർക്ക് നേടിയ വിജയികളുടെ വിവരങ്ങൾ സ്കൂൾ അധികൃതർ പരിശോധിച്ചു പ്രസിദ്ധീകരിക്കുന്നതായിരിക്കും.
+                നിങ്ങളുടെ ഉത്തരങ്ങൾ ഡാറ്റാബേസിൽ വിജയകരമായി രേഖപ്പെടുത്തിയിട്ടുണ്ട്. മുഴുവൻ മാർക്ക് നേടിയ വിജയികളുടെ വിവരങ്ങൾ സ്കൂൾ അധികൃതർ പരിശോധിച്ചു പ്രസിദ്ധീകരിക്കുന്നതായിരിക്കും.
             </p>
             <div class="mt-6 p-4 bg-amber-50 rounded-2xl border border-amber-200 text-amber-800 text-sm font-semibold shadow-sm">
                 📌 ഒരു മൊബൈൽ നമ്പറിൽ ഒരു പ്രാവശ്യം മാത്രമേ ഈ ക്വിസിൽ പങ്കെടുക്കാൻ സാധിക്കൂ.
@@ -140,7 +140,7 @@
         <div class="bg-white rounded-3xl p-6 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-100">
             <div class="flex justify-between items-center mb-4 border-b pb-4">
                 <div>
-                    <h3 class="text-xl font-bold text-gray-900">അഡ്മിൻ പാനൽ (ടീച്ചേഴ്സ് ലോഞ്ച് - ക്ലൗഡ് സിങ്ക്)</h3>
+                    <h3 class="text-xl font-bold text-gray-900">അഡ്മിൻ പാനൽ (ടീച്ചേഴ്സ് ലോഞ്ച്)</h3>
                     <p class="text-xs text-gray-500">പങ്കെടുത്തവരുടെ സ്കോറുകൾ, ശരി/തെറ്റ് ഉത്തരങ്ങൾ, പ്രിന്റബിൾ PDF & വിജയികളെ പ്രഖ്യാപിക്കൽ</p>
                 </div>
                 <button onclick="closeAdminModal()" class="text-gray-400 hover:text-gray-800 text-2xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition">&times;</button>
@@ -190,11 +190,11 @@
                     <span>📄</span> പിഡിഎഫ് റിപ്പോർട്ട് ഡൗൺലോഡ് (A4 Format)
                 </button>
                 <button onclick="exportData()" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-xs px-4 py-2.5 rounded-xl font-bold btn-3d shadow">ജോസൺ (JSON) ഡൗൺലോഡ്</button>
-                <button onclick="clearCloudData()" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-xs px-4 py-2.5 rounded-xl font-bold btn-3d shadow">എല്ലാ ക്ലൗഡ് ഡാറ്റയും ക്ലിയർ ചെയ്യുക</button>
+                <button onclick="clearCloudData()" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-xs px-4 py-2.5 rounded-xl font-bold btn-3d shadow">എല്ലാ ഡാറ്റയും ക്ലിയർ ചെയ്യുക</button>
             </div>
 
             <div id="admin-data-list" class="space-y-3">
-                <p class="text-gray-500 text-center py-6 font-medium">ക്ലൗഡ് ഡാറ്റ ലോഡ് ചെയ്യുന്നു...</p>
+                <p class="text-gray-500 text-center py-6 font-medium">ഡാറ്റ ലോഡ് ചെയ്യുന്നു...</p>
             </div>
         </div>
     </div>
@@ -215,7 +215,7 @@
                     <th class="border border-gray-400 p-2">ക്ലാസ്</th>
                     <th class="border border-gray-400 p-2">ഫോൺ</th>
                     <th class="border border-gray-400 p-2">ശരി</th>
-                    <th class="border border-gray-400 p-2">തെറ്റ്/ഒഴിവായത്</th>
+                    <th class="border border-gray-400 p-2">തെറ്റ്</th>
                     <th class="border border-gray-400 p-2">സ്കോർ</th>
                     <th class="border border-gray-400 p-2">സമയം</th>
                 </tr>
@@ -234,14 +234,10 @@
         </div>
     </div>
 
-    <footer class="text-center py-5 text-xs text-emerald-900 font-semibold bg-emerald-100/50 border-t border-emerald-200">
-        ജി.എൽ.പി സ്കൂൾ മുണ്ടേക്കരാട് ഗാന്ധി ക്വിസ് ആപ്പ് &copy; 2026
-    </footer>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, doc, setDoc, getDocs, deleteDoc, onSnapshot, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, doc, setDoc, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'mundakkarad-gandhi-quiz-2026';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
@@ -253,114 +249,138 @@
             appId: "1:1234567890:web:abcdef"
         };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
+        let db = null;
+        let auth = null;
 
-        let cachedParticipants = [];
-        let cachedPublishedResult = null;
-
-        async function initFirebase() {
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-                
-                const participantsCol = collection(db, 'artifacts', appId, 'public', 'data', 'participants');
-                onSnapshot(query(participantsCol), (snapshot) => {
-                    cachedParticipants = [];
-                    snapshot.forEach(docSnap => {
-                        cachedParticipants.push(docSnap.data());
-                    });
-                    if (!document.getElementById('admin-modal').classList.contains('hidden')) {
-                        renderAdminData();
-                    }
-                }, (error) => {
-                    console.error("Firestore sync error:", error);
-                });
-
-                const settingsDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'published_results');
-                onSnapshot(settingsDocRef, (docSnap) => {
-                    if (docSnap.exists()) {
-                        cachedPublishedResult = docSnap.data();
-                        document.getElementById('public-results-btn-container').classList.remove('hidden');
-                    } else {
-                        cachedPublishedResult = null;
-                        document.getElementById('public-results-btn-container').classList.add('hidden');
-                    }
-                }, (error) => {
-                    console.error("Settings sync error:", error);
-                });
-
-            } catch (err) {
-                console.error("Auth / Firebase error:", err);
-            }
+        try {
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+        } catch (e) {
+            console.warn("Firebase init skipped/failed, falling back to local storage.", e);
         }
 
-        initFirebase();
-
-        window.cloudSaveParticipant = async function(userData) {
-            const user = auth.currentUser;
-            if (!user) return false;
+        // Hybrid storage helpers supporting 100+ participants
+        window.getAllParticipants = async function() {
+            let participants = [];
             try {
-                const docId = `mobile_${userData.mobile}`;
-                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'participants', docId);
-                await setDoc(docRef, userData);
-                return true;
-            } catch(e) {
-                console.error("Error saving participant:", e);
-                return false;
+                const localData = localStorage.getItem('mundakkarad_participants');
+                if (localData) {
+                    participants = JSON.parse(localData);
+                }
+            } catch(e) { console.error(e); }
+
+            if (db && auth) {
+                try {
+                    if (!auth.currentUser) {
+                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                            await signInWithCustomToken(auth, __initial_auth_token);
+                        } else {
+                            await signInAnonymously(auth);
+                        }
+                    }
+                    const snapshot = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'participants'));
+                    let cloudList = [];
+                    snapshot.forEach(docSnap => {
+                        cloudList.push(docSnap.data());
+                    });
+                    if (cloudList.length > 0) {
+                        participants = cloudList;
+                        localStorage.setItem('mundakkarad_participants', JSON.stringify(participants));
+                    }
+                } catch(e) {
+                    console.warn("Cloud fetch fallback to local:", e);
+                }
+            }
+            return participants;
+        };
+
+        window.saveParticipantToStorage = async function(userData) {
+            try {
+                let participants = [];
+                const localData = localStorage.getItem('mundakkarad_participants');
+                if (localData) {
+                    participants = JSON.parse(localData);
+                }
+                participants = participants.filter(p => p.mobile !== userData.mobile);
+                participants.push(userData);
+                localStorage.setItem('mundakkarad_participants', JSON.stringify(participants));
+            } catch(e) { console.error(e); }
+
+            if (db && auth) {
+                try {
+                    const docId = `mobile_${userData.mobile}`;
+                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'participants', docId);
+                    await setDoc(docRef, userData);
+                } catch(e) {
+                    console.warn("Cloud save error:", e);
+                }
             }
         };
 
-        window.cloudGetParticipants = function() {
-            return cachedParticipants;
-        };
-
-        window.cloudClearAllParticipants = async function() {
-            const user = auth.currentUser;
-            if (!user) return;
-            try {
-                const snapshot = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'participants'));
-                const deletePromises = snapshot.docs.map(d => deleteDoc(d.ref));
-                await Promise.all(deletePromises);
-                cachedParticipants = [];
-            } catch(e) {
-                console.error("Error clearing participants:", e);
+        window.clearAllParticipantsStorage = async function() {
+            localStorage.removeItem('mundakkarad_participants');
+            if (db && auth) {
+                try {
+                    const snapshot = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'participants'));
+                    const deletePromises = snapshot.docs.map(d => deleteDoc(d.ref));
+                    await Promise.all(deletePromises);
+                } catch(e) { console.error(e); }
             }
         };
 
-        window.cloudSavePublishedResult = async function(structuredData) {
-            const user = auth.currentUser;
-            if (!user) return;
+        window.savePublishedResultStorage = async function(structuredData) {
+            localStorage.setItem('mundakkarad_published_results', JSON.stringify(structuredData));
+            if (db && auth) {
+                try {
+                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'published_results');
+                    await setDoc(docRef, structuredData);
+                } catch(e) { console.error(e); }
+            }
+            document.getElementById('public-results-btn-container').classList.remove('hidden');
+        };
+
+        window.removePublishedResultStorage = async function() {
+            localStorage.removeItem('mundakkarad_published_results');
+            if (db && auth) {
+                try {
+                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'published_results');
+                    await deleteDoc(docRef);
+                } catch(e) { console.error(e); }
+            }
+            document.getElementById('public-results-btn-container').classList.add('hidden');
+        };
+
+        window.checkPublishedResultsOnLoad = async function() {
             try {
-                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'published_results');
-                await setDoc(docRef, structuredData);
-                cachedPublishedResult = structuredData;
-                document.getElementById('public-results-btn-container').classList.remove('hidden');
+                let pub = localStorage.getItem('mundakkarad_published_results');
+                if (pub) {
+                    document.getElementById('public-results-btn-container').classList.remove('hidden');
+                    return;
+                }
+                
+                if (db && auth) {
+                    if (!auth.currentUser) {
+                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                            await signInWithCustomToken(auth, __initial_auth_token);
+                        } else {
+                            await signInAnonymously(auth);
+                        }
+                    }
+                    const snapshot = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'settings'));
+                    snapshot.forEach(docSnap => {
+                        if (docSnap.id === 'published_results') {
+                            localStorage.setItem('mundakkarad_published_results', JSON.stringify(docSnap.data()));
+                            document.getElementById('public-results-btn-container').classList.remove('hidden');
+                        }
+                    });
+                }
             } catch(e) {
-                console.error("Error publishing results:", e);
+                console.warn("Could not check published results:", e);
             }
         };
 
-        window.cloudRemovePublishedResult = async function() {
-            const user = auth.currentUser;
-            if (!user) return;
-            try {
-                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'published_results');
-                await deleteDoc(docRef);
-                cachedPublishedResult = null;
-                document.getElementById('public-results-btn-container').classList.add('hidden');
-            } catch(e) {
-                console.error("Error removing results:", e);
-            }
-        };
-
-        window.cloudGetPublishedResult = function() {
-            return cachedPublishedResult;
-        };
+        window.checkPublishedResultsOnLoad();
     </script>
 
     <script>
@@ -518,7 +538,7 @@
                 return;
             }
 
-            let participants = window.cloudGetParticipants ? window.cloudGetParticipants() : [];
+            let participants = await window.getAllParticipants();
             const existing = participants.find(p => p.mobile === mobileNumber);
 
             if (existing) {
@@ -658,15 +678,13 @@
             userData.incorrectCount = incorrectCount;
             userData.totalQuestions = quizQuestions.length;
 
-            if (window.cloudSaveParticipant) {
-                await window.cloudSaveParticipant(userData);
-            }
+            await window.saveParticipantToStorage(userData);
         }
 
-        function openAdminModal() {
+        async function openAdminModal() {
             const pwd = prompt("അഡ്മിൻ പാസ്‌വേഡ് നൽകുക:");
             if (pwd === "admin123") {
-                renderAdminData();
+                await renderAdminData();
                 loadSavedStructuredWinners();
                 document.getElementById('admin-modal').classList.remove('hidden');
             } else if (pwd !== null) {
@@ -682,9 +700,11 @@
             document.getElementById('admin-modal').classList.add('hidden');
         }
 
-        function renderAdminData() {
+        async function renderAdminData() {
             const listContainer = document.getElementById('admin-data-list');
-            let participants = window.cloudGetParticipants ? window.cloudGetParticipants() : [];
+            listContainer.innerHTML = '<p class="text-gray-500 text-center py-6 font-medium">ഡാറ്റ ലോഡ് ചെയ്യുന്നു...</p>';
+            
+            let participants = await window.getAllParticipants();
 
             if (participants.length === 0) {
                 listContainer.innerHTML = '<p class="text-gray-500 text-center py-6 font-medium">ഇതുവരെ ആരും ക്വിസിൽ പങ്കെടുത്തിട്ടില്ല.</p>';
@@ -790,36 +810,36 @@
                 return;
             }
 
-            if (window.cloudSavePublishedResult) {
-                await window.cloudSavePublishedResult(winnersData);
-            }
-            alert("മത്സര ഫലം ക്ലൗഡിൽ വിജയകരമായി പബ്ലിഷ് / അപ്ഡേറ്റ് ചെയ്തു!");
+            await window.savePublishedResultStorage(winnersData);
+            alert("മത്സര ഫലം വിജയകരമായി പബ്ലിഷ് / അപ്ഡേറ്റ് ചെയ്തു!");
         }
 
         function loadSavedStructuredWinners() {
-            const saved = window.cloudGetPublishedResult ? window.cloudGetPublishedResult() : null;
-            if (saved) {
-                try {
-                    initWinnerRows(saved);
-                } catch(e) {
+            try {
+                const saved = localStorage.getItem('mundakkarad_published_results');
+                if (saved) {
+                    initWinnerRows(JSON.parse(saved));
+                } else {
                     initWinnerRows();
                 }
-            } else {
+            } catch(e) {
                 initWinnerRows();
             }
         }
 
         async function hideResult() {
-            if (window.cloudRemovePublishedResult) {
-                await window.cloudRemovePublishedResult();
-            }
+            await window.removePublishedResultStorage();
             initWinnerRows();
             alert("ഫലം പബ്ലിഷിംഗ് പൂർണ്ണമായി നീക്കം ചെയ്തു.");
         }
 
-        function openPublicResultsModal() {
-            const saved = window.cloudGetPublishedResult ? window.cloudGetPublishedResult() : null;
+        async function openPublicResultsModal() {
             const contentContainer = document.getElementById('public-results-content');
+            let saved = null;
+            try {
+                const local = localStorage.getItem('mundakkarad_published_results');
+                if (local) saved = JSON.parse(local);
+            } catch(e) {}
             
             if (!saved) {
                 contentContainer.innerHTML = '<p class="text-center text-gray-500">ഫലം ഉടൻ പ്രസിദ്ധീകരിക്കുന്നതാണ്.</p>';
@@ -857,8 +877,8 @@
             document.getElementById('public-results-modal').classList.add('hidden');
         }
 
-        function downloadPDF() {
-            let participants = window.cloudGetParticipants ? window.cloudGetParticipants() : [];
+        async function downloadPDF() {
+            let participants = await window.getAllParticipants();
             if (participants.length === 0) {
                 alert("ഡൗൺലോഡ് ചെയ്യാൻ ഡാറ്റകളൊന്നുമില്ല!");
                 return;
@@ -903,8 +923,8 @@
             });
         }
 
-        function exportData() {
-            let participants = window.cloudGetParticipants ? window.cloudGetParticipants() : [];
+        async function exportData() {
+            let participants = await window.getAllParticipants();
             let blob = new Blob([JSON.stringify(participants, null, 2)], { type: 'application/json' });
             let url = URL.createObjectURL(blob);
             let a = document.createElement('a');
@@ -914,11 +934,9 @@
         }
 
         async function clearCloudData() {
-            if (confirm("എല്ലാ ക്ലൗഡ് ഡാറ്റയും ക്ലിയർ ചെയ്യണമെന്നുറപ്പാണോ?")) {
-                if (window.cloudClearAllParticipants) {
-                    await window.cloudClearAllParticipants();
-                }
-                renderAdminData();
+            if (confirm("എല്ലാ ഡാറ്റയും ക്ലിയർ ചെയ്യണമെന്നുറപ്പാണോ?")) {
+                await window.clearAllParticipantsStorage();
+                await renderAdminData();
             }
         }
     </script>
