@@ -45,7 +45,7 @@
             
             <!-- Prominent Results Button at Top of Registration Card (Dynamically Controlled) -->
             <div id="public-results-btn-container" class="mb-5 hidden">
-                <button onclick="openPublicResultsModal()" class="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white text-sm font-bold py-3.5 rounded-2xl btn-3d shadow-md flex items-center justify-center gap-2 animate-bounce">
+                <button type="button" onclick="openPublicResultsModal()" class="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white text-sm font-bold py-3.5 rounded-2xl btn-3d shadow-md flex items-center justify-center gap-2 animate-bounce cursor-pointer">
                     <span>🏆</span> ഔദ്യോഗിക മത്സര ഫലം പ്രസിദ്ധീകരിച്ചു! (View Results)
                 </button>
             </div>
@@ -80,14 +80,14 @@
                     <label class="block text-sm font-bold text-gray-700 mb-1">മൊബൈൽ നമ്പർ (10 അക്കം)</label>
                     <input type="tel" id="mobile-number" pattern="[0-9]{10}" placeholder="ഉദാ: 9847123456" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-600 focus:outline-none transition">
                 </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-bold py-4 rounded-2xl btn-3d mt-2 text-lg shadow-lg">
-                    ക്വിസ് ആരംഭിക്കുക 🚀
+                <button type="submit" id="start-btn" class="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-bold py-4 rounded-2xl btn-3d mt-2 text-lg shadow-lg cursor-pointer">
+                    Start Quiz 🚀
                 </button>
             </form>
 
             <!-- Admin Panel Launcher Button -->
             <div class="mt-4 pt-4 border-t border-gray-100">
-                <button onclick="openAdminModal()" class="w-full bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-800 hover:to-slate-900 text-white text-sm font-bold py-3.5 rounded-2xl btn-3d shadow-md flex items-center justify-center gap-2">
+                <button type="button" onclick="openAdminModal()" class="w-full bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-800 hover:to-slate-900 text-white text-sm font-bold py-3.5 rounded-2xl btn-3d shadow-md flex items-center justify-center gap-2 cursor-pointer">
                     <span>🔐</span> അഡ്മിൻ പാനൽ (ടീച്ചേഴ്സ് ലോഞ്ച്)
                 </button>
             </div>
@@ -95,7 +95,7 @@
             <div id="reg-error" class="text-red-600 font-semibold text-sm text-center mt-3 hidden bg-red-50 p-3 rounded-xl border border-red-200"></div>
         </div>
 
-        <!-- 2. Quiz Screen (40 seconds timer & clean selection) -->
+        <!-- 2. Quiz Screen (40 seconds timer strictly) -->
         <div id="screen-quiz" class="bg-white/95 backdrop-blur-md rounded-3xl card-3d p-6 md:p-8 w-full hidden border border-emerald-200">
             <div class="flex justify-between items-center mb-5 border-b pb-4">
                 <span id="question-counter" class="text-sm font-bold text-emerald-800 bg-emerald-100 px-4 py-1.5 rounded-xl">ചോദ്യം 1 / 20</span>
@@ -129,7 +129,7 @@
             <div class="mt-6 p-4 bg-amber-50 rounded-2xl border border-amber-200 text-amber-800 text-sm font-semibold shadow-sm">
                 📌 ഒരു മൊബൈൽ നമ്പറിൽ ഒരു പ്രാവശ്യം മാത്രമേ ഈ ക്വിസിൽ പങ്കെടുക്കാൻ സാധിക്കൂ.
             </div>
-            <button onclick="location.reload()" class="mt-6 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-bold px-8 py-3.5 rounded-2xl btn-3d shadow-lg">
+            <button type="button" onclick="location.reload()" class="mt-6 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-bold px-8 py-3.5 rounded-2xl btn-3d shadow-lg cursor-pointer">
                 ഹോം പേജിലേക്ക് മടങ്ങുക
             </button>
         </div>
@@ -143,7 +143,7 @@
                     <h3 class="text-xl font-bold text-gray-900">അഡ്മിൻ പാനൽ (ടീച്ചേഴ്സ് ലോഞ്ച്)</h3>
                     <p class="text-xs text-gray-500">പങ്കെടുത്തവരുടെ സ്കോറുകൾ, വ്യക്തിഗത ഡിലീറ്റ്, പിഡിഎഫ് & വിജയികളെ പ്രഖ്യാപിക്കൽ</p>
                 </div>
-                <button onclick="closeAdminModal()" class="text-gray-400 hover:text-gray-800 text-2xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition">&times;</button>
+                <button type="button" onclick="closeAdminModal()" class="text-gray-400 hover:text-gray-800 text-2xl font-bold w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition cursor-pointer">&times;</button>
             </div>
 
             <!-- Structured Winner Publishing Section -->
@@ -155,7 +155,7 @@
                     <div class="bg-white p-3 rounded-xl border border-amber-200">
                         <div class="flex justify-between items-center mb-2">
                             <span class="font-bold text-xs text-amber-800">🥇 ഒന്നാം സ്ഥാനം (1st Place)</span>
-                            <button type="button" onclick="addWinnerRow('first')" class="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-2.5 py-1 rounded-lg font-bold">+ ആൾ ചേർക്കുക</button>
+                            <button type="button" onclick="addWinnerRow('first')" class="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-2.5 py-1 rounded-lg font-bold cursor-pointer">+ ആൾ ചേർക്കുക</button>
                         </div>
                         <div id="winners-first-container" class="space-y-2"></div>
                     </div>
@@ -164,7 +164,7 @@
                     <div class="bg-white p-3 rounded-xl border border-amber-200">
                         <div class="flex justify-between items-center mb-2">
                             <span class="font-bold text-xs text-amber-800">🥈 രണ്ടാം സ്ഥാനം (2nd Place)</span>
-                            <button type="button" onclick="addWinnerRow('second')" class="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-2.5 py-1 rounded-lg font-bold">+ ആൾ ചേർക്കുക</button>
+                            <button type="button" onclick="addWinnerRow('second')" class="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-2.5 py-1 rounded-lg font-bold cursor-pointer">+ ആൾ ചേർക്കുക</button>
                         </div>
                         <div id="winners-second-container" class="space-y-2"></div>
                     </div>
@@ -173,23 +173,23 @@
                     <div class="bg-white p-3 rounded-xl border border-amber-200">
                         <div class="flex justify-between items-center mb-2">
                             <span class="font-bold text-xs text-amber-800">🥉 മൂന്നാം സ്ഥാനം (3rd Place)</span>
-                            <button type="button" onclick="addWinnerRow('third')" class="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-2.5 py-1 rounded-lg font-bold">+ ആൾ ചേർക്കുക</button>
+                            <button type="button" onclick="addWinnerRow('third')" class="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-2.5 py-1 rounded-lg font-bold cursor-pointer">+ ആൾ ചേർക്കുക</button>
                         </div>
                         <div id="winners-third-container" class="space-y-2"></div>
                     </div>
                 </div>
 
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="publishStructuredResult()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-5 py-2.5 rounded-xl font-bold shadow">ഔദ്യോഗിക റിസൾട്ട് പബ്ലിഷ് / അപ്ഡേറ്റ് ചെയ്യുക</button>
-                    <button onclick="hideResult()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs px-5 py-2.5 rounded-xl font-bold shadow">പബ്ലിഷിംഗ് ഡിലീറ്റ് ചെയ്യുക / ക്ലിയർ ചെയ്യുക</button>
+                    <button type="button" onclick="publishStructuredResult()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-5 py-2.5 rounded-xl font-bold shadow cursor-pointer">ഔദ്യോഗിക റിസൾട്ട് പബ്ലിഷ് / അപ്ഡേറ്റ് ചെയ്യുക</button>
+                    <button type="button" onclick="hideResult()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs px-5 py-2.5 rounded-xl font-bold shadow cursor-pointer">പബ്ലിഷിംഗ് ഡിലീറ്റ് ചെയ്യുക / ക്ലിയർ ചെയ്യുക</button>
                 </div>
             </div>
 
             <div class="mb-4 flex flex-wrap gap-2">
-                <button onclick="downloadPDF()" class="bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-700 hover:to-rose-800 text-white text-xs px-4 py-2.5 rounded-xl font-bold btn-3d shadow flex items-center gap-1.5">
+                <button type="button" onclick="downloadPDF()" class="bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-700 hover:to-rose-800 text-white text-xs px-4 py-2.5 rounded-xl font-bold btn-3d shadow flex items-center gap-1.5 cursor-pointer">
                     <span>📄</span> പിഡിഎഫ് റിപ്പോർട്ട് ഡൗൺലോഡ് (A4 Format)
                 </button>
-                <button onclick="exportData()" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-xs px-4 py-2.5 rounded-xl font-bold btn-3d shadow">ജോസൺ (JSON) ഡൗൺലോഡ്</button>
+                <button type="button" onclick="exportData()" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-xs px-4 py-2.5 rounded-xl font-bold btn-3d shadow cursor-pointer">ജോസൺ (JSON) ഡൗൺലോഡ്</button>
             </div>
 
             <div id="admin-data-list" class="space-y-3">
@@ -229,7 +229,7 @@
             <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mx-auto text-3xl mb-3 shadow-inner">🏆</div>
             <h3 class="text-xl font-bold text-gray-900 mb-4">ഗാന്ധി ക്വിസ് ഔദ്യോഗിക വിജയികൾ</h3>
             <div id="public-results-content" class="p-4 bg-amber-50/70 rounded-2xl border border-amber-200 text-sm font-semibold text-gray-800 mb-6 text-left space-y-4"></div>
-            <button onclick="closePublicResultsModal()" class="bg-slate-800 text-white px-6 py-2.5 rounded-xl font-bold text-xs">മടങ്ങുക</button>
+            <button type="button" onclick="closePublicResultsModal()" class="bg-slate-800 text-white px-6 py-2.5 rounded-xl font-bold text-xs cursor-pointer">മടങ്ങുക</button>
         </div>
     </div>
 
@@ -448,7 +448,7 @@
         let correctCount = 0;
         let incorrectCount = 0;
         let timer = null;
-        let timeLeft = 40; // 40 seconds per question strictly
+        let timeLeft = 40; // Exactly 40 seconds per question strictly
         let userData = {};
         let quizActive = false;
 
@@ -459,8 +459,8 @@
         const regError = document.getElementById('reg-error');
 
         function prepareShuffledQuiz() {
-            // Shuffle questions order, but preserve their respective display labels cleanly
-            let list = baseQuizQuestions.map(item => {
+            // Keep question number labels fixed while shuffling option positions cleanly
+            let list = baseQuizQuestions.map((item, originalIndex) => {
                 let opts = [...item.options];
                 let correctOptText = opts[item.answer];
                 // Shuffle options
@@ -470,26 +470,19 @@
                 }
                 const newAnsIdx = opts.indexOf(correctOptText);
                 return {
-                    qOriginal: item.q,
+                    q: item.q,
                     options: opts,
                     answer: newAnsIdx
                 };
             });
 
+            // Shuffle questions array order
             for (let i = list.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [list[i], list[j]] = [list[j], list[i]];
             }
 
-            // Re-assign display numbers 1 to 20 sequentially to prevent confusion
-            quizQuestions = list.map((item, index) => {
-                let cleanedText = item.q.replace(/^\d+\.\s*/, `${index + 1}. `);
-                return {
-                    q: cleanedText,
-                    options: item.options,
-                    answer: item.answer
-                };
-            });
+            quizQuestions = list;
         }
 
         regForm.addEventListener('submit', async function(e) {
@@ -558,7 +551,7 @@
             qObj.options.forEach((opt, idx) => {
                 const btn = document.createElement('button');
                 btn.type = 'button';
-                btn.className = "w-full text-left p-4 rounded-2xl border-2 border-gray-200 hover:border-emerald-500 hover:bg-emerald-50/80 font-bold transition duration-150 flex items-center justify-between group shadow-sm bg-white";
+                btn.className = "w-full text-left p-4 rounded-2xl border-2 border-gray-200 hover:border-emerald-500 hover:bg-emerald-50/80 font-bold transition duration-150 flex items-center justify-between group shadow-sm bg-white cursor-pointer";
                 btn.innerHTML = `<span class="text-gray-800">${opt}</span> <span class="w-8 h-8 rounded-xl border-2 border-gray-300 flex items-center justify-center text-xs text-gray-500 group-hover:border-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition font-bold">${String.fromCharCode(65 + idx)}</span>`;
                 btn.onclick = () => selectOption(idx, btn);
                 optionsContainer.appendChild(btn);
@@ -592,7 +585,7 @@
                 btn.classList.add('cursor-not-allowed');
             }
 
-            // Only mark the user's selected button cleanly without exposing correct/incorrect hints to students
+            // Only mark user's selected choice without exposing answers
             selectedBtn.classList.remove('border-gray-200', 'hover:bg-emerald-50/80', 'bg-white');
             selectedBtn.classList.add('bg-emerald-100', 'border-emerald-600', 'text-emerald-900', 'shadow-md');
 
@@ -606,7 +599,7 @@
             setTimeout(() => {
                 currentQuestionIndex++;
                 loadQuestion();
-            }, 800);
+            }, 600);
         }
 
         function handleTimeOut() {
@@ -625,7 +618,7 @@
             setTimeout(() => {
                 currentQuestionIndex++;
                 loadQuestion();
-            }, 800);
+            }, 600);
         }
 
         async function finishQuiz() {
@@ -699,7 +692,7 @@
                         </div>
                         <div class="flex items-center gap-2 self-end md:self-center">
                             <span class="bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-xl text-xs shadow-sm">സ്കോർ: ${p.score}</span>
-                            <button onclick="deleteParticipant('${p.mobile}')" class="bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold px-3 py-1.5 rounded-xl text-xs transition">🗑️ ഡിലീറ്റ്</button>
+                            <button type="button" onclick="deleteParticipant('${p.mobile}')" class="bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold px-3 py-1.5 rounded-xl text-xs transition cursor-pointer">🗑️ ഡിലീറ്റ്</button>
                         </div>
                     </div>
                 `;
@@ -746,7 +739,7 @@
                     <option value="മൂന്നാം ക്ലാസ്" ${classVal === 'മൂന്നാം ക്ലാസ്' ? 'selected' : ''}>മൂന്നാം ക്ലാസ്</option>
                     <option value="നാലാം ക്ലാസ്" ${classVal === 'നാലാം ക്ലാസ്' ? 'selected' : ''}>നാലാം ക്ലാസ്</option>
                 </select>
-                <button type="button" onclick="this.parentElement.remove()" class="text-red-500 font-bold px-2 py-1 hover:bg-red-50 rounded-lg text-xs">&times;</button>
+                <button type="button" onclick="this.parentElement.remove()" class="text-red-500 font-bold px-2 py-1 hover:bg-red-50 rounded-lg text-xs cursor-pointer">&times;</button>
             `;
             container.appendChild(div);
         }
