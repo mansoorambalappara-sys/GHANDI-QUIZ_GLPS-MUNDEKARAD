@@ -95,13 +95,13 @@
             <div id="reg-error" class="text-red-600 font-semibold text-sm text-center mt-3 hidden bg-red-50 p-3 rounded-xl border border-red-200"></div>
         </div>
 
-        <!-- 2. Quiz Screen -->
+        <!-- 2. Quiz Screen (40 seconds timer & clean selection) -->
         <div id="screen-quiz" class="bg-white/95 backdrop-blur-md rounded-3xl card-3d p-6 md:p-8 w-full hidden border border-emerald-200">
             <div class="flex justify-between items-center mb-5 border-b pb-4">
                 <span id="question-counter" class="text-sm font-bold text-emerald-800 bg-emerald-100 px-4 py-1.5 rounded-xl">ചോദ്യം 1 / 20</span>
                 <div class="flex items-center space-x-1 bg-amber-100 text-amber-800 px-4 py-1.5 rounded-xl font-bold text-sm shadow-inner">
                     <span>⏱️</span>
-                    <span id="timer-display">50</span>s
+                    <span id="timer-display">40</span>s
                 </div>
             </div>
 
@@ -190,7 +190,6 @@
                     <span>📄</span> പിഡിഎഫ് റിപ്പോർട്ട് ഡൗൺലോഡ് (A4 Format)
                 </button>
                 <button onclick="exportData()" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-xs px-4 py-2.5 rounded-xl font-bold btn-3d shadow">ജോസൺ (JSON) ഡൗൺലോഡ്</button>
-                <button onclick="clearCloudData()" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-xs px-4 py-2.5 rounded-xl font-bold btn-3d shadow">ലോക്കൽ ഡാറ്റ ക്ലിയർ ചെയ്യുക</button>
             </div>
 
             <div id="admin-data-list" class="space-y-3">
@@ -238,7 +237,6 @@
         // ==========================================
         // GOOGLE APPS SCRIPT WEB APP URL CONFIGURATION
         // ==========================================
-        // താഴെയുള്ള കോട്ടേഷനുള്ളിൽ ഗൂഗിൾ ആപ്സ് സ്ക്രിപ്റ്റിന്റെ വെബ് ആപ്പ് URL ഒട്ടിച്ചു കൊടുക്കുക:
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby1rnGJm9gZxayiCsNISOTDKGIHNNQjGm2QQahZuMPkXr_xyv-GMQzgacdB-km3VbZJOg/exec"; 
 
         window.getAllParticipants = async function() {
@@ -301,10 +299,17 @@
                 participants = participants.filter(p => p.mobile !== mobile);
                 localStorage.setItem('mundakkarad_participants', JSON.stringify(participants));
             } catch(e) { console.error(e); }
-        };
 
-        window.clearAllParticipantsStorage = async function() {
-            localStorage.removeItem('mundakkarad_participants');
+            if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL.startsWith('http')) {
+                try {
+                    await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ action: 'delete', mobile: mobile })
+                    });
+                } catch(e) { console.warn("Google Sheet delete error:", e); }
+            }
         };
 
         window.savePublishedResultStorage = async function(structuredData) {
@@ -443,7 +448,7 @@
         let correctCount = 0;
         let incorrectCount = 0;
         let timer = null;
-        let timeLeft = 50;
+        let timeLeft = 40; // 40 seconds per question
         let userData = {};
         let quizActive = false;
 
@@ -527,7 +532,7 @@
             }
 
             quizActive = true;
-            timeLeft = 50;
+            timeLeft = 40;
             document.getElementById('timer-display').textContent = timeLeft;
             document.getElementById('timer-bar').style.width = '100%';
 
@@ -541,9 +546,9 @@
             qObj.options.forEach((opt, idx) => {
                 const btn = document.createElement('button');
                 btn.type = 'button';
-                btn.className = "w-full text-left p-4 rounded-2xl border-2 border-gray-200 hover:border-emerald-500 hover:bg-emerald-50/80 font-bold transition duration-150 flex items-center justify-between group shadow-sm";
+                btn.className = "w-full text-left p-4 rounded-2xl border-2 border-gray-200 hover:border-emerald-500 hover:bg-emerald-50/80 font-bold transition duration-150 flex items-center justify-between group shadow-sm bg-white";
                 btn.innerHTML = `<span class="text-gray-800">${opt}</span> <span class="w-8 h-8 rounded-xl border-2 border-gray-300 flex items-center justify-center text-xs text-gray-500 group-hover:border-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition font-bold">${String.fromCharCode(65 + idx)}</span>`;
-                btn.onclick = () => selectOption(idx);
+                btn.onclick = () => selectOption(idx, btn);
                 optionsContainer.appendChild(btn);
             });
 
@@ -551,7 +556,7 @@
             timer = setInterval(() => {
                 timeLeft--;
                 document.getElementById('timer-display').textContent = timeLeft;
-                const percentage = (timeLeft / 50) * 100;
+                const percentage = (timeLeft / 40) * 100;
                 document.getElementById('timer-bar').style.width = `${percentage}%`;
 
                 if (timeLeft <= 0) {
@@ -561,7 +566,7 @@
             }, 1000);
         }
 
-        function selectOption(selectedIndex) {
+        function selectOption(selectedIndex, selectedBtn) {
             if (!quizActive) return;
             quizActive = false;
             clearInterval(timer);
@@ -572,27 +577,24 @@
 
             for (let btn of buttons) {
                 btn.disabled = true;
-                btn.classList.add('cursor-not-allowed', 'opacity-85');
+                btn.classList.add('cursor-not-allowed');
             }
 
+            // Only mark the user's selected button cleanly without exposing correct/incorrect hints to students
+            selectedBtn.classList.remove('border-gray-200', 'hover:bg-emerald-50/80', 'bg-white');
+            selectedBtn.classList.add('bg-emerald-100', 'border-emerald-600', 'text-emerald-900', 'shadow-md');
+
             if (selectedIndex === qObj.answer) {
-                buttons[selectedIndex].classList.remove('border-gray-200', 'hover:bg-emerald-50/80');
-                buttons[selectedIndex].classList.add('bg-emerald-100', 'border-emerald-600', 'text-emerald-900', 'shadow-md');
-                score += (10 + Math.floor(timeLeft / 5));
+                score += (10 + Math.floor(timeLeft / 4));
                 correctCount++;
             } else {
-                buttons[selectedIndex].classList.remove('border-gray-200');
-                buttons[selectedIndex].classList.add('bg-red-100', 'border-red-500', 'text-red-900', 'shadow-md');
-                
-                buttons[qObj.answer].classList.remove('border-gray-200');
-                buttons[qObj.answer].classList.add('bg-emerald-100', 'border-emerald-600', 'text-emerald-900', 'shadow-md');
                 incorrectCount++;
             }
 
             setTimeout(() => {
                 currentQuestionIndex++;
                 loadQuestion();
-            }, 1200);
+            }, 1000);
         }
 
         function handleTimeOut() {
@@ -600,7 +602,6 @@
             quizActive = false;
             incorrectCount++;
 
-            const qObj = quizQuestions[currentQuestionIndex];
             const optionsContainer = document.getElementById('options-container');
             const buttons = optionsContainer.getElementsByTagName('button');
 
@@ -609,13 +610,10 @@
                 btn.classList.add('cursor-not-allowed', 'opacity-85');
             }
 
-            buttons[qObj.answer].classList.remove('border-gray-200');
-            buttons[qObj.answer].classList.add('bg-amber-100', 'border-amber-500', 'text-amber-900', 'shadow-md');
-
             setTimeout(() => {
                 currentQuestionIndex++;
                 loadQuestion();
-            }, 1200);
+            }, 1000);
         }
 
         async function finishQuiz() {
@@ -889,13 +887,6 @@
             a.href = url;
             a.download = 'mundakkarad_gandhi_quiz_results.json';
             a.click();
-        }
-
-        window.clearCloudData = async function() {
-            if (confirm("എല്ലാ ലോക്കൽ ഡാറ്റയും ക്ലിയർ ചെയ്യണമെന്നുറപ്പാണോ?")) {
-                await window.clearAllParticipantsStorage();
-                await renderAdminData();
-            }
         }
     </script>
 </body>
